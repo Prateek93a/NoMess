@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import dimensions from '../../constants/dimensions';
 import urls from '../../constants/imageUrls';
@@ -58,9 +58,11 @@ export default function CategoryScreen({ navigation }) {
                     <View style={[styles.dotsBase, page == 2 && styles.dotsSelected]}></View>
                 </View>
                 <View style={{ alignItems: 'center', paddingTop: 10 }}>
-                    <TouchableOpacity onPress={() => handleButtonClick(page)} style={styles.button}>
+                    <Pressable
+                     onPress={() => handleButtonClick(page)}
+                     style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
                         <Text style={styles.buttonText}>I am a {categories[page]}</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
             </View>
         </View>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TextInput, Alert, TouchableOpacity } from 'react-native';
+import { Text, View, SafeAreaView, StyleSheet, TextInput, Alert, TouchableOpacity, Pressable } from 'react-native';
 import dimensions from '../../constants/dimensions';
 
 const passwordRules = "required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;";
@@ -20,7 +20,7 @@ export default function RegisterScreen({ route, navigation }) {
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff', padding: 5 }}>
-            <View style={style.header}>
+            <View style={styles.header}>
                 <View style={{ paddingBottom: 15 }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'orange' }}>{route.params.category}</Text>
@@ -29,24 +29,44 @@ export default function RegisterScreen({ route, navigation }) {
                 </View>
             </View>
             <View style={{ paddingHorizontal: 5 }}>
-                <TextInput onChangeText={(text) => handleInputChange(0, text)} value={email} placeholder='Email' style={style.textInput}></TextInput>
-                <TextInput secureTextEntry passwordRules={passwordRules} onChangeText={(text) => handleInputChange(1, text)} value={password} placeholder='Password' style={style.textInput}></TextInput>
-                <TextInput secureTextEntry passwordRules={passwordRules} onChangeText={(text) => handleInputChange(2, text)} value={confirmPassword} placeholder='Confirm Password' style={style.textInput}></TextInput>
-                <TouchableOpacity onPress={() => Alert.alert('Simple Button pressed')} style={style.button}>
-                    <Text style={style.buttonText}>Register</Text>
-                </TouchableOpacity>
+                <TextInput 
+                onChangeText={(text) => handleInputChange(0, text)}
+                value={email}
+                placeholder='Email'
+                style={styles.textInput} />
+
+                <TextInput 
+                secureTextEntry
+                passwordRules={passwordRules}
+                onChangeText={(text) => handleInputChange(1, text)}
+                value={password} placeholder='Password'
+                style={styles.textInput} />
+
+                <TextInput
+                 secureTextEntry
+                 passwordRules={passwordRules}
+                 onChangeText={(text) => handleInputChange(2, text)}
+                 value={confirmPassword} 
+                 placeholder='Confirm Password'
+                 style={styles.textInput} />
+                 
+                <Pressable
+                 onPress={() => Alert.alert('Simple Button pressed')}
+                 style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
+                    <Text style={styles.buttonText}>Register</Text>
+                </Pressable>
             </View>
-            <View style={style.logintextview}>
+            <View style={styles.logintextview}>
                 <Text style={{ color: '#555' }}>Already have an account? </Text>
                 <TouchableOpacity onPress={handleLoginClick}>
-                    <Text style={style.logintext}>Login here.</Text>
+                    <Text style={styles.logintext}>Login here.</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     header: {
         marginTop: 20,
         flexDirection: 'row',

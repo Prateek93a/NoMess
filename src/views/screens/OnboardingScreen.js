@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import dimensions from '../../constants/dimensions';
 import urls from '../../constants/imageUrls';
@@ -51,9 +51,12 @@ export default function OnboardingScreen({ navigation }) {
                     <View style={[styles.dotsBase, page == 2 && styles.dotsSelected]}></View>
                 </View>
                 {page == 2 && (
-                    <TouchableOpacity onPress={handleButtonClick} style={styles.button}>
+                    <Pressable
+                     android_ripple
+                     onPress={handleButtonClick} 
+                     style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
                         <Text style={styles.buttonText}>Get Started</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 )}
             </View>
         </View>
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         alignItems: 'center',
         borderRadius: 10,
-        marginTop: 20
+        marginTop: 20,
     },
     buttonText: {
         color: 'white',

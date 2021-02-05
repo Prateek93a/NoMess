@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import dimensions from '../../constants/dimensions';
 import urls from '../../constants/imageUrls';
 import strings from '../../constants/strings';
@@ -11,17 +11,23 @@ export default function LandingScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.imageContent}>
-            <Image style={{ height: 120, width: 120, resizeMode: 'contain' }} source={{ uri: urls.LOGO }} />
-            <Text style={styles.text}>{strings.LANDING_PAGE_SUBTEXT}</Text>
-            <Image style={{ height: 250, width: 300, resizeMode: 'contain', marginTop: 30 }} source={{ uri: urls.EAT }} />
+                <Image style={{ height: 120, width: 120, resizeMode: 'contain' }} source={{ uri: urls.LOGO }} />
+                <Text style={styles.text}>{strings.LANDING_PAGE_SUBTEXT}</Text>
+                <Image style={{ height: 250, width: 300, resizeMode: 'contain', marginTop: 30 }} source={{ uri: urls.EAT }} />
             </View>
             <View style={styles.buttonContent}>
-            <TouchableOpacity onPress={() => buttonHandler('onboarding')} style={styles.button}>
-                <Text style={styles.buttonText}>Show Me How</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => buttonHandler('category')} style={styles.button2}>
-                <Text style={styles.buttonText2}>Get Started</Text>
-            </TouchableOpacity>
+            <Pressable
+                android_ripple
+                onPress={() => buttonHandler('onboarding')} 
+                style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
+                    <Text style={styles.buttonText}>Show Me How</Text>
+            </Pressable>
+            <Pressable
+                android_ripple
+                onPress={() => buttonHandler('category')}
+                style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button2]}>
+                    <Text style={styles.buttonText2}>Get Started</Text>
+            </Pressable>
             </View>
         </View>
     )

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TextInput, Alert, TouchableOpacity } from 'react-native';
+import { Text, View, SafeAreaView, StyleSheet, TextInput, Alert, Pressable } from 'react-native';
 import dimensions from '../../constants/dimensions';
 
 export default function LoginScreen() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff', padding: 5 }}>
-            <View style={style.header}>
+            <View style={styles.header}>
                 <View style={{ paddingBottom: 15 }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'orange' }}>Mess</Text>
@@ -14,17 +14,19 @@ export default function LoginScreen() {
                 </View>
             </View>
             <View style={{ flex: 1, paddingHorizontal: 5 }}>
-                <TextInput placeholder='Email' style={style.textInput}></TextInput>
-                <TextInput secureTextEntry placeholder='Password' style={style.textInput}></TextInput>
-                <TouchableOpacity onPress={() => Alert.alert('Simple Button pressed')} style={style.button}>
-                    <Text style={style.buttonText}>Login</Text>
-                </TouchableOpacity>
+                <TextInput placeholder='Email' style={styles.textInput}></TextInput>
+                <TextInput secureTextEntry placeholder='Password' style={styles.textInput}></TextInput>
+                <Pressable
+                 onPress={() => Alert.alert('Simple Button pressed')}
+                 style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
+                    <Text style={styles.buttonText}>Login</Text>
+                </Pressable>
             </View>
         </SafeAreaView>
     )
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     header: {
         marginTop: 20,
         flexDirection: 'row',

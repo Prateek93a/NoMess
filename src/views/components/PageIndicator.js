@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
         height: 5,
         width: 5,
         overflow: 'hidden',
-        backgroundColor: '#ccc'
     },
     dotsSelected: {
         backgroundColor: 'yello'

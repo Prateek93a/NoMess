@@ -59,7 +59,7 @@ export default function CategoryScreen({ navigation }) {
                 </View>
                 <View style={{ alignItems: 'center', paddingTop: 10 }}>
                     <TouchableOpacity onPress={() => handleButtonClick(page)} style={styles.button}>
-                        <Text style={styles.buttonText}>I am a {category[page]}</Text>
+                        <Text style={styles.buttonText}>I am a {categories[page]}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

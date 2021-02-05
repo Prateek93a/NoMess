@@ -6,8 +6,8 @@ import urls from '../../constants/imageUrls';
 import strings from '../../constants/strings';
 
 const slides = [{ title: strings.ONBOARDING_TITLE_1, subtext: strings.ONBOARDING_SUBTEXT_1, img: urls.ONBOARDING_1 },
-{ title: strings.ONBOARDING_TITLE_2, subtext: strings.ONBOARDING_SUBTEXT_2, img: urls.ONBOARDING_1 },
-{ title: strings.ONBOARDING_TITLE_3, subtext: strings.ONBOARDING_SUBTEXT_3, img: urls.ONBOARDING_1 }];
+{ title: strings.ONBOARDING_TITLE_2, subtext: strings.ONBOARDING_SUBTEXT_2, img: urls.ONBOARDING_2 },
+{ title: strings.ONBOARDING_TITLE_3, subtext: strings.ONBOARDING_SUBTEXT_3, img: urls.ONBOARDING_3 }];
 
 
 function Slide({ title, subtext, img }, key) {

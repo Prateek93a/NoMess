@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TextInput, Dimensions, Alert, TouchableOpacity } from 'react-native';
-
-const { width: dWidth } = Dimensions.get('screen');
+import { Text, View, SafeAreaView, StyleSheet, TextInput, Alert, TouchableOpacity } from 'react-native';
+import dimensions from '../../constants/dimensions';
 
 export default function LoginScreen() {
     return (
@@ -44,7 +43,7 @@ const style = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         marginTop: 10,
-        width: dWidth - 20,
+        width: dimensions.WIDTH - 20,
     },
     buttonText: {
         color: 'white',

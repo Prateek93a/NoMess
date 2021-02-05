@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
+import dimensions from '../../constants/dimensions';
+import urls from '../../constants/imageUrls';
+import categories from '../../constants/categories';
 
-const slides = [{ category: 'student', text: 'Student', img: 'https://i.ibb.co/S0Y9MZh/student2.png' },
-{ category: 'caterer', text: 'Caterer', img: 'https://i.ibb.co/r4LXBPS/chef2.png' },
-{ category: 'guest', text: 'Guest', img: 'https://i.ibb.co/KwV8JqV/guest2.png' }]
+const slides = [urls.STUDENT, urls.CHEF, urls.GUEST];
 
-const category = ['Student', 'Caterer', 'Guest']
-
-const { width: dWidth } = Dimensions.get('screen');
-
-function Slide({ category, text, img }, key, navigation) {
-
+function Slide(img, key) {
     return (
         <View key={'' + key} style={styles.slideview} collapsable={false}>
             <Image style={styles.img} source={{ uri: img }} />
@@ -23,7 +19,7 @@ export default function CategoryScreen({ navigation }) {
     const [page, setPage] = useState(0);
 
     const handleButtonClick = (page) => {
-        navigation.navigate('register', { category: category[page] });
+        navigation.navigate('register', { category: categories[page] });
     }
 
     const handlePageUpdate = ({ nativeEvent }) => {
@@ -52,7 +48,7 @@ export default function CategoryScreen({ navigation }) {
                     showPageIndicator
                     onPageSelected={handlePageUpdate}
                 >
-                    {slides.map((slide, index) => Slide(slide, index + 1, navigation))}
+                    {slides.map((slide, index) => Slide(slide, index + 1))}
                 </ViewPager>
             </View>
             <View style={styles.indicator}>
@@ -113,7 +109,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         marginTop: 10,
-        width: dWidth - 20,
+        width: dimensions.WIDTH - 20,
     },
     buttonText: {
         color: 'white',

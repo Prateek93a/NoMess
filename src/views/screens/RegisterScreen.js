@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TextInput, Dimensions, Alert, TouchableOpacity } from 'react-native';
+import { Text, View, SafeAreaView, StyleSheet, TextInput, Alert, TouchableOpacity } from 'react-native';
+import dimensions from '../../constants/dimensions';
 
-const { width: dWidth } = Dimensions.get('screen');
+const passwordRules = "required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;";
 
 export default function RegisterScreen({ route, navigation }) {
 
@@ -29,8 +30,8 @@ export default function RegisterScreen({ route, navigation }) {
             </View>
             <View style={{ paddingHorizontal: 5 }}>
                 <TextInput onChangeText={(text) => handleInputChange(0, text)} value={email} placeholder='Email' style={style.textInput}></TextInput>
-                <TextInput secureTextEntry passwordRules="required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;" onChangeText={(text) => handleInputChange(1, text)} value={password} placeholder='Password' style={style.textInput}></TextInput>
-                <TextInput secureTextEntry passwordRules="required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;" onChangeText={(text) => handleInputChange(2, text)} value={confirmPassword} placeholder='Confirm Password' style={style.textInput}></TextInput>
+                <TextInput secureTextEntry passwordRules={passwordRules} onChangeText={(text) => handleInputChange(1, text)} value={password} placeholder='Password' style={style.textInput}></TextInput>
+                <TextInput secureTextEntry passwordRules={passwordRules} onChangeText={(text) => handleInputChange(2, text)} value={confirmPassword} placeholder='Confirm Password' style={style.textInput}></TextInput>
                 <TouchableOpacity onPress={() => Alert.alert('Simple Button pressed')} style={style.button}>
                     <Text style={style.buttonText}>Register</Text>
                 </TouchableOpacity>
@@ -73,7 +74,7 @@ const style = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         marginTop: 10,
-        width: dWidth - 20,
+        width: dimensions.WIDTH-20,
     },
     buttonText: {
         color: 'white',

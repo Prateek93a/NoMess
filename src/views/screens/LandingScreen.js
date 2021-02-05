@@ -1,15 +1,18 @@
-import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native'
-const { width: dWidth } = Dimensions.get('screen');
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import dimensions from '../../constants/dimensions';
+import urls from '../../constants/imageUrls';
+import strings from '../../constants/strings';
+
 export default function LandingScreen({ navigation }) {
     const buttonHandler = (screen) => {
         navigation.navigate(screen);
     }
     return (
         <View style={styles.container}>
-            <Image style={{ height: 120, width: 120, resizeMode: 'contain' }} source={{ uri: 'https://i.ibb.co/P15btbH/logo.png' }} />
-            <Text style={styles.text}>Your assistant to effective mess management</Text>
-            <Image style={{ height: 250, width: 300, resizeMode: 'contain', marginTop: 30 }} source={{ uri: 'https://i.ibb.co/jh52DPT/eat.png' }} />
+            <Image style={{ height: 120, width: 120, resizeMode: 'contain' }} source={{ uri: urls.LOGO }} />
+            <Text style={styles.text}>{strings.LANDING_PAGE_SUBTEXT}</Text>
+            <Image style={{ height: 250, width: 300, resizeMode: 'contain', marginTop: 30 }} source={{ uri: urls.EAT }} />
 
             <TouchableOpacity onPress={() => buttonHandler('onboarding')} style={styles.button}>
                 <Text style={styles.buttonText}>Show Me How</Text>
@@ -19,7 +22,7 @@ export default function LandingScreen({ navigation }) {
             </TouchableOpacity>
         </View>
     )
-}
+};
 
 
 const styles = StyleSheet.create({
@@ -47,7 +50,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         marginTop: 20,
-        width: dWidth - 20,
+        width: dimensions.WIDTH-20,
     },
     buttonText: {
         color: 'white',
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         marginTop: 10,
-        width: dWidth - 20,
+        width: dimensions.WIDTH-20,
     },
     buttonText2: {
         color: '#222',

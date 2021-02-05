@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
+import dimensions from '../../constants/dimensions';
+import urls from '../../constants/imageUrls';
+import strings from '../../constants/strings';
 
-const slides = [{ title: 'Ease Your Mess', subtext: 'Handle payments, complaints, feedback and updates right from your phone', img: 'https://i.ibb.co/qCB5q9x/page4.png' },
-{ title: 'Plan Ahead', subtext: 'Get useful analytics that track your bills and mess service usage', img: 'https://i.ibb.co/g3PY76x/page5.png' }, //'https://cdn.dribbble.com/users/3281732/screenshots/9165292/media/ccbfbce040e1941972dbc6a378c35e98.jpg?compress=1&resize=1200x1200'
-{ title: 'Live Peacefully', subtext: 'With mess management covered, you can focus on things that are actually important', img: 'https://i.ibb.co/Dt0B3kW/page6.png' }]
+const slides = [{ title: strings.ONBOARDING_TITLE_1, subtext: strings.ONBOARDING_SUBTEXT_1, img: urls.ONBOARDING_1 },
+{ title: strings.ONBOARDING_TITLE_2, subtext: strings.ONBOARDING_SUBTEXT_2, img: urls.ONBOARDING_1 },
+{ title: strings.ONBOARDING_TITLE_3, subtext: strings.ONBOARDING_SUBTEXT_3, img: urls.ONBOARDING_1 }];
 
-const { width: dWidth } = Dimensions.get('screen');
 
 function Slide({ title, subtext, img }, key) {
     return (
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     },
     img: {
         height: 400,
-        width: dWidth,
+        width: dimensions.WIDTH,
         marginTop: 30,
         resizeMode: 'contain'
     },

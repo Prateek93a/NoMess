@@ -20,13 +20,13 @@ export default function LandingScreen({ navigation }) {
                 android_ripple
                 onPress={() => buttonHandler('onboarding')} 
                 style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                    <Text style={styles.buttonText}>Show Me How</Text>
+                    <Text style={styles.buttonText}>SHOW ME HOW</Text>
             </Pressable>
             <Pressable
                 android_ripple
                 onPress={() => buttonHandler('category')}
                 style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button2]}>
-                    <Text style={styles.buttonText2}>Get Started</Text>
+                    <Text style={styles.buttonText2}>GET STARTED</Text>
             </Pressable>
             </View>
         </View>

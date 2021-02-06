@@ -55,7 +55,7 @@ export default function OnboardingScreen({ navigation }) {
                      android_ripple
                      onPress={handleButtonClick} 
                      style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                        <Text style={styles.buttonText}>Get Started</Text>
+                        <Text style={styles.buttonText}>GET STARTED</Text>
                     </Pressable>
                 )}
             </View>

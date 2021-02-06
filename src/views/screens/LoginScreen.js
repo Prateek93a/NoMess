@@ -19,7 +19,7 @@ export default function LoginScreen() {
                 <Pressable
                  onPress={() => Alert.alert('Simple Button pressed')}
                  style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={styles.buttonText}>LOGIN</Text>
                 </Pressable>
             </View>
         </SafeAreaView>

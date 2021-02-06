@@ -1,4 +1,5 @@
 export default urls = {
+    SPLASH: 'https://i.ibb.co/Jq4H2Tm/splash.png',
     LOGO: 'https://i.ibb.co/P15btbH/logo.png',
     EAT: 'https://i.ibb.co/jh52DPT/eat.png',
     ONBOARDING_1: 'https://i.ibb.co/qCB5q9x/page4.png',

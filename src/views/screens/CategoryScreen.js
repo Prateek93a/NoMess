@@ -61,7 +61,7 @@ export default function CategoryScreen({ navigation }) {
                     <Pressable
                      onPress={() => handleButtonClick(page)}
                      style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                        <Text style={styles.buttonText}>I am a {categories[page]}</Text>
+                        <Text style={styles.buttonText}>{categories[page]}</Text>
                     </Pressable>
                 </View>
             </View>

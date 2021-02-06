@@ -53,7 +53,7 @@ export default function RegisterScreen({ route, navigation }) {
                 <Pressable
                  onPress={() => Alert.alert('Simple Button pressed')}
                  style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                    <Text style={styles.buttonText}>Register</Text>
+                    <Text style={styles.buttonText}>REGISTER</Text>
                 </Pressable>
             </View>
             <View style={styles.logintextview}>

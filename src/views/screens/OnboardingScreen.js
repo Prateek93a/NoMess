@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import dimensions from '../../constants/dimensions';
-import urls from '../../constants/imageUrls';
+import {onboardImage1, onboardImage2, onboardImage3} from '../../constants/images';
 import strings from '../../constants/strings';
 
-const slides = [{ title: strings.ONBOARDING_TITLE_1, subtext: strings.ONBOARDING_SUBTEXT_1, img: urls.ONBOARDING_1 },
-{ title: strings.ONBOARDING_TITLE_2, subtext: strings.ONBOARDING_SUBTEXT_2, img: urls.ONBOARDING_2 },
-{ title: strings.ONBOARDING_TITLE_3, subtext: strings.ONBOARDING_SUBTEXT_3, img: urls.ONBOARDING_3 }];
+const slides = [{ title: strings.ONBOARDING_TITLE_1, subtext: strings.ONBOARDING_SUBTEXT_1, img: onboardImage1 },
+{ title: strings.ONBOARDING_TITLE_2, subtext: strings.ONBOARDING_SUBTEXT_2, img: onboardImage2 },
+{ title: strings.ONBOARDING_TITLE_3, subtext: strings.ONBOARDING_SUBTEXT_3, img: onboardImage3 }];
 
 
 function Slide({ title, subtext, img }, key) {
@@ -15,7 +15,7 @@ function Slide({ title, subtext, img }, key) {
         <View key={'' + key} style={styles.slideview} collapsable={false}>
             <Text style={styles.title}>{title}</Text>
             <Text style={styles.subtext}>{subtext}</Text>
-            <Image style={styles.img} source={{ uri: img }} />
+            <Image style={styles.img} source={img} />
         </View>
     )
 }

@@ -1,0 +1,9 @@
+export const splashImage = require('../assets/splash.png');
+export const logoImage = require('../assets/logo.png');
+export const eatImage = require('../assets/eat.png');
+export const onboardImage1 = require('../assets/page4.png');
+export const onboardImage2 = require('../assets/page5.png');
+export const onboardImage3 = require('../assets/page6.png');
+export const guestImage = require('../assets/guest2.png');
+export const chefImage = require('../assets/chef2.png');
+export const studentImage = require('../assets/student2.png');

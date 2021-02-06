@@ -5,7 +5,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,6 +16,7 @@ import LoginScreen from './src/views/screens/LoginScreen';
 import OnboardingScreen from './src/views/screens/OnboardingScreen';
 import CategoryScreen from './src/views/screens/CategoryScreen';
 import SplashScreen from './src/views/screens/SplashScreen';
+import {AuthContext} from './src/context/authContext';
 
 const Stack = createStackNavigator();
 
@@ -23,13 +24,15 @@ export default function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
+  const {setAuthData} = useContext(AuthContext);
+
   useEffect(() => {
     (async function (){
       const authData = await AsyncStorage.getItem('auth-data');
       if(authData === null){
         setAuthenticated(false);
       }else{
-        // todo: use data to update user state
+        setAuthData(authData);
         setAuthenticated(true);
       }
       setLoading(false);
@@ -42,7 +45,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor='white' barStyle='dark-content' />
+      <StatusBar backgroundColor='black' barStyle='light-content' />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!isAuthenticated ? (
              <>
@@ -53,9 +56,7 @@ export default function App() {
               <Stack.Screen name='login' component={LoginScreen} />
             </>
         ) : (
-            <>
               <Stack.Screen name='dashboard' component={LandingScreen} />
-            </>
         )}
      
       </Stack.Navigator>

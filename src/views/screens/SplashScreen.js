@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import urls from '../../constants/imageUrls';
+import {splashImage} from '../../constants/images';
 
 export default function SplashScreen() {
     return (
         <View style={styles.container}>
             <Image 
             style={styles.img}
-            source={{ uri: urls.SPLASH }} />
+            source={splashImage} />
         </View>
     )
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import dimensions from '../../constants/dimensions';
-import urls from '../../constants/imageUrls';
+import {eatImage, logoImage} from '../../constants/images';
 import strings from '../../constants/strings';
 
 export default function LandingScreen({ navigation }) {
@@ -11,9 +11,9 @@ export default function LandingScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.imageContent}>
-                <Image style={{ height: 120, width: 120, resizeMode: 'contain' }} source={{ uri: urls.LOGO }} />
+                <Image style={{ height: 120, width: 120, resizeMode: 'contain' }} source={logoImage} />
                 <Text style={styles.text}>{strings.LANDING_PAGE_SUBTEXT}</Text>
-                <Image style={{ height: 250, width: 300, resizeMode: 'contain', marginTop: 30 }} source={{ uri: urls.EAT }} />
+                <Image style={{ height: 250, width: 300, resizeMode: 'contain', marginTop: 30 }} source={eatImage} />
             </View>
             <View style={styles.buttonContent}>
             <Pressable

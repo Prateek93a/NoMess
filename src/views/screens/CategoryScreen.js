@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import dimensions from '../../constants/dimensions';
-import urls from '../../constants/imageUrls';
+import {studentImage, chefImage, guestImage} from '../../constants/images';
 import categories from '../../constants/categories';
 
-const slides = [urls.STUDENT, urls.CHEF, urls.GUEST];
+const slides = [studentImage, chefImage, guestImage];
 
 function Slide(img, key) {
     return (
         <View key={'' + key} style={styles.slideview} collapsable={false}>
-            <Image style={styles.img} source={{ uri: img }} />
+            <Image style={styles.img} source={img} />
         </View>
     )
 }

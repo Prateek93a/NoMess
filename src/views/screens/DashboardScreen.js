@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/FontAwesome5Pro';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Stack = createStackNavigator();
 
@@ -22,8 +22,8 @@ function Home({navigation}) {
         style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.headerButtons}>
-                    <Icon.Button onPress={navigation.openDrawer} name='bars' size={30} backgroundColor='white' color='black'/>
-                    <Icon.Button onPress={navigation.openDrawer} name='home' size={30} backgroundColor='white' color='black'/>
+                    <Icon.Button onPress={navigation.openDrawer} name='bars' size={20} backgroundColor='white' color='black'/>
+                    <Icon.Button onPress={navigation.openDrawer} name='cog' size={20} backgroundColor='white' color='black'/>
                 </View>
                 <Text style={styles.welcomeText}>Welcome,</Text>
                 <Text style={styles.welcomeText}>Prateek Jain 👋️</Text>
@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
     headerButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 5
+        paddingHorizontal: 0,
+        paddingVertical: 10
     },
     body: {
         flex: 3,

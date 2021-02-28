@@ -9,7 +9,7 @@ export default function RegisterScreen({ route, navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const stateUpdateFuntions = [setEmail, setPassword, setConfirmPassword]
+    const stateUpdateFuntions = [setEmail, setPassword, setConfirmPassword];
 
     const handleInputChange = (index, text) => {
         stateUpdateFuntions[index](text);

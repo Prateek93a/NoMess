@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable} from 'react-native';
 import dimensions from '../../constants/dimensions';
 import {eatImage, logoImage} from '../../constants/images';
 import strings from '../../constants/strings';
@@ -9,6 +9,8 @@ export default function LandingScreen({ navigation }) {
         navigation.navigate(screen);
     }
     return (
+        <>
+        <StatusBar backgroundColor='#FCF6D7' barStyle='dark-content' />
         <View style={styles.container}>
             <View style={styles.imageContent}>
                 <Image style={{ height: 120, width: 120, resizeMode: 'contain' }} source={logoImage} />
@@ -30,6 +32,7 @@ export default function LandingScreen({ navigation }) {
             </Pressable>
             </View>
         </View>
+        </>
     )
 };
 

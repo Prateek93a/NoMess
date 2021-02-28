@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
 
@@ -13,9 +14,29 @@ export default function DashboardScreen() {
     )
 }
 
+const fabItems = [{type: 'utensils', title: 'Go Eating', screen: 'eat'}, 
+                {type: 'sign-out-alt', title: 'Take Leave', screen: 'leave'},
+                {type: 'file-medical', title: 'Complaint', screen: 'complain'},
+                {type: 'wallet', title: 'Handle Bills', screen: 'bill'}];
+
+function Fab({type, title}){
+    return (
+        <View style={styles.fabView}>
+            <Icon name={type} size={30}/>
+            <Text style={styles.fabText}>
+                    {title}
+                </Text>
+        </View>
+    );
+}
 
 
 function Home({navigation}) {
+
+    const handlePress = (screen) => {
+        navigation.navigate(screen);
+    }
+
     return (
         <ScrollView 
         contentContainerStyle={{flexGrow: 1}}
@@ -30,7 +51,7 @@ function Home({navigation}) {
             </View>
             <View style={styles.body}> 
                 <View style={styles.carasoulContainer}>
-                    <Text style={styles.labelText}>See what's happening!</Text>
+                    <Text style={styles.labelText}>What do you want to do?</Text>
                     <ScrollView 
                         nestedScrollEnabled
                         horizontal
@@ -38,19 +59,16 @@ function Home({navigation}) {
                         disableIntervalMomentum
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={styles.carasoul}>
-                            <View style={[styles.cardBase, styles.carasoulCard]}>
-                                <Text>Mess Manager Changed</Text>
-                            </View>
-                            <View style={[styles.cardBase, styles.carasoulCard]}>
-
-                            </View>
-                            <View style={[styles.cardBase, styles.carasoulCard]}>
-
-                            </View>
+                            {fabItems.map((item, index) => (<TouchableOpacity 
+                                                                onPress={() => handlePress(item.screen)}
+                                                                key={index}
+                                                                style={styles.fabContainer}>
+                                                                    {Fab(item)}
+                                                            </TouchableOpacity>))}
                     </ScrollView>
                 </View>
                 <View style={[styles.cardContainer]}>
-                    <Text style={styles.labelText}>What do you want to do?</Text>
+                    <Text style={styles.labelText}>See what's happening!</Text>
                     <View style={[styles.cardBase, styles.card]}>
                         <Text>Mess Manager Changed</Text>
                     </View>
@@ -127,5 +145,20 @@ const styles = StyleSheet.create({
        minHeight: 200,
        marginTop: 10,
        elevation: 0
+    },
+    fabContainer: {
+        marginRight: 10,
+    },
+    fabView: {
+        backgroundColor: '#efefef',
+        borderRadius: 50,
+        justifyContent:'center',
+        alignItems: 'center',
+        height: 100,
+        width: 100
+    },
+    fabText: {
+        paddingTop: 5,
+        fontSize: 10
     }
 });

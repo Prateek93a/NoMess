@@ -46,7 +46,7 @@ export default function App() {
     return (<SplashScreen/>);
   }
 
-  if(isAuthenticated){
+  if(!isAuthenticated){
     return (
       <NavigationContainer>
         <StatusBar backgroundColor='#FCF6D7' barStyle='dark-content' />

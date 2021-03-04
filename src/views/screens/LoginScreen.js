@@ -16,21 +16,19 @@ export default function LoginScreen() {
     };
 
     const handleLoginClick = async() => {
-        if(!email.length && !password.length){
-            setEmailError('Please fill this field.');
-            setPasswordError('Please fill this field.');
-            return;
-        }
+        let incomplete = false;
 
         if(!email.length){
+            incomplete = true;
             setEmailError('Please fill this field.');
-            return;
         }
 
         if(!password.length){
+            incomplete = true;
             setPasswordError('Please fill this field.');
-            return;
         }
+
+        if(incomplete) return;
 
         setLoading(true);
         // todo: handle errors better, avoid using Alert

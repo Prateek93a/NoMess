@@ -72,7 +72,7 @@ export default function LoginScreen() {
                 name: user.name,
                 email: user.email,
                 typeAccount: user.typeAccount,
-                specialRole: user.specialRole,
+                specialRole: user.specialRole
             };
             await AsyncStorage.setItem('auth-data', JSON.stringify(data));
             setLoading(false);

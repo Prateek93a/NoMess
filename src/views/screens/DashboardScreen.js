@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {AuthContext} from '../../context/authContext';
 
 const Stack = createStackNavigator();
 
@@ -32,10 +33,25 @@ function Fab({type, title}){
 
 
 function Home({navigation}) {
+    //useEffect(() => {
+    //    (async function (){
+    //      const authData = await AsyncStorage.getItem('auth-data');
+    //      if(authData === null){
+    //        setAuthenticated(false);
+    //      }else{
+    //        setAuthData(authData);
+    //        setAuthenticated(true);
+    //      }
+    //      setLoading(false);
+    //    })();
+    //}, []);
 
     const handlePress = (screen) => {
         navigation.navigate(screen);
     }
+
+    const {authData} = useContext(AuthContext);
+    const {name} = authData;
 
     return (
         <ScrollView 
@@ -44,10 +60,10 @@ function Home({navigation}) {
             <View style={styles.header}>
                 <View style={styles.headerButtons}>
                     <Icon.Button onPress={navigation.openDrawer} name='bars' size={20} backgroundColor='white' color='black'/>
-                    <Icon.Button onPress={navigation.openDrawer} name='cog' size={20} backgroundColor='white' color='black'/>
+                    <Icon.Button onPress={() => handlePress('profile')} name='cog' size={20} backgroundColor='white' color='black'/>
                 </View>
                 <Text style={styles.welcomeText}>Welcome,</Text>
-                <Text style={styles.welcomeText}>Prateek Jain 👋️</Text>
+                <Text style={styles.welcomeText}>{name} 👋️</Text>
             </View>
             <View style={styles.body}> 
                 <View style={styles.carasoulContainer}>

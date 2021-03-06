@@ -1,15 +1,28 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, ScrollView, Modal, TextInput, Pressable } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
 
-//import Modal from 'react-native-modal';
 
 export default function LeaveScreen({navigation}) {
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isStartDateVisible, setStartDateVisible] = useState(false);
+    const [isEndDateVisible, setEndDateVisible] = useState(false);
+    const [startDate, setStartDate] = useState(+new Date());
+    const [endDate, setEndDate] = useState(+new Date());
+
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
+    };
+
+    const toggleStartDate = () => {
+        setStartDateVisible(!isStartDateVisible);
+    };
+
+    const toggleEndDate = () => {
+        setEndDateVisible(!isEndDateVisible);
     };
 
     const handleTextChange = (text) => setComplainText(text);
@@ -23,21 +36,43 @@ export default function LeaveScreen({navigation}) {
                 <Modal 
                 animationType='slide'
                 hardwareAccelerated
+	            onRequestClose={toggleModal}
                 visible={isModalVisible}>
                     <View style={{ backgroundColor:'white', padding: 10 }}>
-                        <Text style={styles.labelText}>What is your complaint?</Text>
+                        <Text style={styles.labelText}>What is the reason?</Text>
                         <TextInput
                             onChangeText={handleTextChange}
-                            numberOfLines={10}
+                            numberOfLines={5}
                             multiline
                             textAlignVertical='top'
                             style={{padding: 5, borderRadius: 5, borderWidth: 1, maxHeight: 600, overflow: 'scroll'}}
                         />
+                        {isStartDateVisible && (<DateTimePicker
+                            value={new Date(startDate)}
+                            
+                            mode="date"
+                            onChange={(_, date) => {console.log(+date); setStartDate(+new Date(date)); setStartDateVisible(false);}}
+                        />)}
+                        {isEndDateVisible && (<DateTimePicker
+                            value={new Date(endDate)}
+                            mode="date"
+                            onChange={(_, date) => {setEndDate(+new Date(date)); setEndDateVisible(false);}}
+                        />)}
+                        <Pressable
+                            onPress={toggleStartDate}
+                            style={({pressed}) => [{opacity: pressed ? 0.8 : 1}]}>
+                                <Text style={{color: 'blue'}}>Set Start Data: <Text>{new Date(startDate).toLocaleDateString()}</Text></Text>
+                        </Pressable>
+                        <Pressable
+                            onPress={toggleEndDate}
+                            style={({pressed}) => [{opacity: pressed ? 0.8 : 1}]}>
+                                <Text style={{color: 'blue'}}>Set End Data: <Text>{new Date(endDate).toLocaleDateString()}</Text></Text>
+                        </Pressable>
                         <Pressable
                             onPress={toggleModal}
                             style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                                <Text style={styles.buttonText}>FILE COMPLAINT</Text>
-                            </Pressable>
+                                <Text style={styles.buttonText}>APPLY FOR LEAVE</Text>
+                        </Pressable>
                     </View>
                 </Modal>
                     <Icon.Button onPress={navigation.openDrawer} name='bars' size={20} backgroundColor='white' color='black'/>
@@ -47,23 +82,23 @@ export default function LeaveScreen({navigation}) {
             </View>
             <View style={styles.body}> 
                 <Card
-                    title='Complaint regarding delays and quality'
+                    title='Leave Application 1'
                     date='19/1/10'
                     id={10}
                     active={false}
-                    status='Resolved'
+                    status='Granted'
                     onPress={()=>{}}
                 />
                 <Card
-                    title='Complaint regarding delays and quality'
+                    title='Leave Application 3'
                     date='19/1/10'
                     id={10}
-                    active={false}
-                    status='Resolved'
+                    active={true}
+                    status='Unresolved'
                     onPress={()=>{}}
                 />
                 <Card
-                    title='Complaint regarding delays and quality'
+                    title='Leave Application 5'
                     date='19/1/10'
                     id={10}
                     active={true}

@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TextInput, Alert, TouchableOpacity, Pressable , ActivityIndicator} from 'react-native';
+import React, { useState, useContext } from 'react';
+import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Pressable , ActivityIndicator} from 'react-native';
+import {AuthContext} from '../../context/authContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import dimensions from '../../constants/dimensions';
 import {REGISTER} from '../../constants/urls';
 
 const passwordRules = "required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;";
 
 export default function RegisterScreen({ route, navigation }) {
+    const {setAuthData} = useContext(AuthContext);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -52,10 +55,9 @@ export default function RegisterScreen({ route, navigation }) {
             setPasswordError('Passwords do not match.');
         }
 
-        //if(incomplete) return;
+        if(incomplete) return;
 
         setLoading(true);
-        // todo: handle errors better, avoid using Alert
         try{
             const res = await fetch(REGISTER, {
                 method: 'POST',
@@ -71,13 +73,20 @@ export default function RegisterScreen({ route, navigation }) {
                 }
             });
             const res_json = await res.json();
-
-            console.log(res_json)
+            const data = {
+                key: res_json.key,
+                name: name,
+                email: email,
+                typeAccount: "string",
+                specialRole: "string",
+            };
+            await AsyncStorage.setItem('auth-data', JSON.stringify(data));
+            setLoading(false);
+            setAuthData(data);
         }catch(error){
             console.log(error.message);
+            setLoading(false);
         } 
-
-        setLoading(false);
     }
 
     const handleLoginClick = () => {
@@ -104,12 +113,14 @@ export default function RegisterScreen({ route, navigation }) {
                 <TextInput 
                 onChangeText={(text) => handleInputChange(1, text)}
                 value={email}
+                autoCapitalize='none'
                 placeholder='Email'
                 style={styles.textInput} />
                 <Text style={styles.errorMessage}>{emailError}</Text>
 
                 <TextInput 
                 secureTextEntry
+                autoCapitalize='none'
                 passwordRules={passwordRules}
                 onChangeText={(text) => handleInputChange(2, text)}
                 value={password} placeholder='Password'
@@ -118,6 +129,7 @@ export default function RegisterScreen({ route, navigation }) {
 
                 <TextInput
                  secureTextEntry
+                 autoCapitalize='none'
                  passwordRules={passwordRules}
                  onChangeText={(text) => handleInputChange(3, text)}
                  value={confirmPassword} 

@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, View, SafeAreaView, StyleSheet, TextInput, Pressable, Alert, ActivityIndicator } from 'react-native';
+import {AuthContext} from '../../context/authContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import dimensions from '../../constants/dimensions';
-import {LOGIN_URL} from '../../constants/urls';
+import {LOGIN_URL, USER} from '../../constants/urls';
 
 export default function LoginScreen() {
+    const {setAuthData} = useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [authError, setAuthError] = useState('');
     const [loading, setLoading] = useState(false);
     const stateUpdateFuntions = [setEmail, setPassword];
 
@@ -16,6 +20,8 @@ export default function LoginScreen() {
     };
 
     const handleLoginClick = async() => {
+        setAuthError('');
+
         let incomplete = false;
 
         if(!email.length){
@@ -31,23 +37,52 @@ export default function LoginScreen() {
         if(incomplete) return;
 
         setLoading(true);
-        // todo: handle errors better, avoid using Alert
+
         try{
             const res = await fetch(LOGIN_URL, {
                 method: 'POST',
                 body: JSON.stringify({email: email.trim(), password: password.trim()}),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 }
             });
-            const res_json = await res.text();
 
-            Alert.alert(res_json);
+            if(res.status == 401){
+                setAuthError('Invalid credentials. Please try another combination.');
+                setLoading(false);  
+                return;
+            }else if(res.status == 500){
+                setAuthError('Some error occured, please retry.');
+                setLoading(false);
+                return;
+            }
+
+            const res_json = await res.json();
+            
+            const user_raw = await fetch(USER, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + res_json.key,
+                }
+            });
+
+            const user = await user_raw.json();
+            const data = {
+                key: res_json.key,
+                name: user.name,
+                email: user.email,
+                typeAccount: user.typeAccount,
+                specialRole: user.specialRole,
+            };
+            await AsyncStorage.setItem('auth-data', JSON.stringify(data));
+            setLoading(false);
+            setAuthData(data);
+
         }catch(error){
             console.log(error.message);
+            setAuthError('Some error occured, please retry.');
+            setLoading(false);
         } 
-
-        setLoading(false);
     };
 
     return (
@@ -62,6 +97,7 @@ export default function LoginScreen() {
             </View>
             <View style={{ flex: 1, paddingHorizontal: 5 }}>
                 <TextInput 
+                    autoCapitalize='none'
                     onChangeText={(text) => handleInputChange(0, text)}
                     placeholder='Email'
                     value={email}
@@ -71,6 +107,7 @@ export default function LoginScreen() {
                 <TextInput
                     onChangeText={(text) => handleInputChange(1, text)}
                     secureTextEntry
+                    autoCapitalize='none'
                     textContentType='password'
                     value={password} 
                     placeholder='Password'
@@ -82,6 +119,7 @@ export default function LoginScreen() {
                  style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
                      {loading ? <ActivityIndicator color='white'/> : <Text style={styles.buttonText}>LOGIN</Text>}
                 </Pressable>
+                <Text style={styles.errorMessage}>{authError}</Text>
             </View>
         </SafeAreaView>
     )

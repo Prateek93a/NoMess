@@ -1,9 +1,8 @@
 import 'react-native-gesture-handler';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext} from 'react';
 import {enableScreens} from 'react-native-screens';
 import { StatusBar} from 'react-native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // todo: move data to a secure storage
 import { NavigationContainer } from '@react-navigation/native';
 import RegisterScreen from './src/views/screens/RegisterScreen';
 import LandingScreen from './src/views/screens/LandingScreen';
@@ -16,6 +15,7 @@ import EatScreen from './src/views/screens/EatScreen';
 import LeaveScreen from './src/views/screens/LeaveScreen';
 import ComplainScreen from './src/views/screens/ComplainScreen';
 import BillScreen from './src/views/screens/BillScreen';
+import ProfileScreen from './src/views/screens/ProfileScreen';
 import {AuthContext} from './src/context/authContext';
 
 enableScreens();
@@ -24,29 +24,14 @@ const OnboardingStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 
 export default function App() {
-  const [isAuthenticated, setAuthenticated] = useState(false);
-  const [isLoading, setLoading] = useState(false);
 
-  const {setAuthData} = useContext(AuthContext);
+  const {authData} = useContext(AuthContext);
 
-  useEffect(() => {
-    (async function (){
-      const authData = await AsyncStorage.getItem('auth-data');
-      if(authData === null){
-        setAuthenticated(false);
-      }else{
-        setAuthData(authData);
-        setAuthenticated(true);
-      }
-      setLoading(false);
-    })();
-  }, []);
+  //if(loading){
+  //  return (<SplashScreen/>);
+  //}
 
-  if(isLoading){
-    return (<SplashScreen/>);
-  }
-
-  if(!isAuthenticated){
+  if(!authData){
     return (
       <NavigationContainer>
         <StatusBar backgroundColor='#FCF6D7' barStyle='dark-content' />
@@ -70,6 +55,7 @@ export default function App() {
         <AuthStack.Screen name='leave' component={LeaveScreen} />
         <AuthStack.Screen name='complain' component={ComplainScreen} />
         <AuthStack.Screen name='bill' component={BillScreen} />
+        <AuthStack.Screen name='profile' component={ProfileScreen} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

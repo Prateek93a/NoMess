@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, ScrollView, Modal, TextInput, Pressable } from 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
 
-//import Modal from 'react-native-modal';
 
 export default function ComplainScreen({navigation}) {
     const [isModalVisible, setModalVisible] = useState(false);
     const [complainText, setComplainText] = useState('');
+    const [numComplaints, setNumComplaints] = useState(0);
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -23,6 +23,7 @@ export default function ComplainScreen({navigation}) {
                 <View style={styles.headerButtons}>
                 <Modal 
                 animationType='slide'
+	        onRequestClose={toggleModal}
                 hardwareAccelerated
                 visible={isModalVisible}>
                     <View style={{ backgroundColor:'white', padding: 10 }}>

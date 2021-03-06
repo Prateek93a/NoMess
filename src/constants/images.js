@@ -7,3 +7,4 @@ export const onboardImage3 = require('../assets/page6.png');
 export const guestImage = require('../assets/guest2.png');
 export const chefImage = require('../assets/chef2.png');
 export const studentImage = require('../assets/student2.png');
+export const emptyImage = require('../assets/empty.png');

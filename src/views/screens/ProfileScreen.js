@@ -8,7 +8,7 @@ import {LOGOUT_URL} from '../../constants/urls';
 export default function ProfileScreen({navigation}) {
     const [loading, setLoading] = useState(false);
     const {setAuthData, authData} = useContext(AuthContext);
-    const {name, email, typeAccount, specialRole} = JSON.parse(authData);
+    const {name, email, typeAccount, specialRole} = authData;
 
     const handleLogout = async() => {
         setLoading(true);

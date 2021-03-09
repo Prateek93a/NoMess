@@ -51,7 +51,7 @@ function Home({navigation}) {
     }
 
     const {authData} = useContext(AuthContext);
-    const {name} = JSON.parse(authData);
+    const {name} = authData;
 
     return (
         <ScrollView 

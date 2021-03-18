@@ -42,7 +42,7 @@ export default function ComplainScreen({navigation}) {
                             </Pressable>
                     </View>
                 </Modal>
-                    <Icon.Button onPress={navigation.goBack} name='bars' size={20} backgroundColor='white' color='black'/>
+                    <Icon.Button onPress={navigation.goBack} name='arrow-left' size={20} backgroundColor='white' color='black'/>
                     <Icon.Button onPress={toggleModal} name='plus' size={20} backgroundColor='white' color='black'/>
                 </View>
                 <Text style={styles.headerText}>Your Complaints</Text>

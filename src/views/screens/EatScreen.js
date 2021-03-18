@@ -190,7 +190,7 @@ export default function EatScreen({navigation}) {
                     </View>
             </Modal>
                 <View style={styles.headerButtons}>
-                    <Icon.Button onPress={navigation.goBack} name='bars' size={20} backgroundColor='white' color='black'/>
+                    <Icon.Button onPress={navigation.goBack} name='arrow-left' size={20} backgroundColor='white' color='black'/>
                     <Icon.Button onPress={toggleModal} name='plus' size={20} backgroundColor='white' color='black'/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent:'space-between'}}>

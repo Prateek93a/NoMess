@@ -190,12 +190,12 @@ export default function EatScreen({navigation}) {
                     </View>
             </Modal>
                 <View style={styles.headerButtons}>
-                    <Icon.Button onPress={navigation.openDrawer} name='bars' size={20} backgroundColor='white' color='black'/>
+                    <Icon.Button onPress={navigation.goBack} name='bars' size={20} backgroundColor='white' color='black'/>
                     <Icon.Button onPress={toggleModal} name='plus' size={20} backgroundColor='white' color='black'/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
                 <Text style={styles.headerText}>Your Coupons</Text>
-                <View style={{justifyContent: 'center', alignItems:'center', flex: 1, flexDirection:'row-reverse'}}>
+                <View style={{justifyContent: 'flex-start', alignItems:'center', flex: 1, flexDirection:'row-reverse'}}>
                     {refreshing ? <ActivityIndicator size={20} color='black'/> : <Icon.Button onPress={refresh} name='sync-alt' size={20} backgroundColor='white' color='black'/>}
                 </View>
                 </View>

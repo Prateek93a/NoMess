@@ -1,41 +1,16 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { consumerFabItems, catererFabItems, Fab} from '../components/Fab';
 import categories from '../../constants/categories';
 import {AuthContext} from '../../context/authContext';
 
-const Stack = createStackNavigator();
 
-export default function DashboardScreen() {
-    return (
-        <Stack.Navigator initialRouteName='home' screenOptions={{ headerShown: false }}>
-            <Stack.Screen name='home' component={Home} />
-        </Stack.Navigator>
-    )
-}
-
-
-
-
-function Home({navigation}) {
+export default function DashboardScreen({navigation}) {
     const {authData} = useContext(AuthContext);
     const {name, typeAccount} = authData;
     const fabItems = typeAccount == categories[1] ? catererFabItems : consumerFabItems;
-    //useEffect(() => {
-    //    (async function (){
-    //      const authData = await AsyncStorage.getItem('auth-data');
-    //      if(authData === null){
-    //        setAuthenticated(false);
-    //      }else{
-    //        setAuthData(authData);
-    //        setAuthenticated(true);
-    //      }
-    //      setLoading(false);
-    //    })();
-    //}, []);
 
     const handlePress = (screen) => {
         navigation.navigate(screen);

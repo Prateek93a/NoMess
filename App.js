@@ -1,9 +1,10 @@
 import 'react-native-gesture-handler';
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {enableScreens} from 'react-native-screens';
 import { StatusBar} from 'react-native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // todo: move data to a secure storage
 import RegisterScreen from './src/views/screens/RegisterScreen';
 import LandingScreen from './src/views/screens/LandingScreen';
 import LoginScreen from './src/views/screens/LoginScreen';
@@ -24,12 +25,23 @@ const OnboardingStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 
 export default function App() {
-
+  const [loading, setLoading] = useState(false);
   const {authData} = useContext(AuthContext);
 
-  //if(loading){
-  //  return (<SplashScreen/>);
-  //}
+  useEffect(() => {
+    setLoading(true);
+    (async function (){
+      const authData = await AsyncStorage.getItem('auth-data');
+      setLoading(false);
+      if(authData){
+        setAuthData(JSON.parse(authData));
+      }
+    })();
+  }, []);
+
+  if(loading){
+    return (<SplashScreen/>);
+  }
 
   if(!authData){
     return (

@@ -10,7 +10,7 @@ export default function AuthComponent({children}) {
     (async function (){
       const authData = await AsyncStorage.getItem('auth-data');
       if(authData){
-        setAuthData(authData);
+        setAuthData(JSON.parse(authData));
       }
     })();
   }, []);

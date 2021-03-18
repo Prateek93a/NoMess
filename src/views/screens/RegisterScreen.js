@@ -77,7 +77,7 @@ export default function RegisterScreen({ route, navigation }) {
                 key: res_json.key,
                 name: name,
                 email: email,
-                typeAccount: "string",
+                typeAccount: route.params.category,
                 specialRole: "string",
             };
             await AsyncStorage.setItem('auth-data', JSON.stringify(data));

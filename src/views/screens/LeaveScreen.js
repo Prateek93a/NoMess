@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, ScrollView, Modal, TextInput, Pressable } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
 
@@ -9,8 +9,9 @@ export default function LeaveScreen({navigation}) {
     const [isModalVisible, setModalVisible] = useState(false);
     const [isStartDateVisible, setStartDateVisible] = useState(false);
     const [isEndDateVisible, setEndDateVisible] = useState(false);
-    const [startDate, setStartDate] = useState(+new Date());
-    const [endDate, setEndDate] = useState(+new Date());
+    const [startDate, setStartDate] = useState(new Date(Date.now()));
+    const [endDate, setEndDate] = useState(new Date(Date.now()));
+
 
 
     const toggleModal = () => {
@@ -47,26 +48,27 @@ export default function LeaveScreen({navigation}) {
                             textAlignVertical='top'
                             style={{padding: 5, borderRadius: 5, borderWidth: 1, maxHeight: 600, overflow: 'scroll'}}
                         />
-                        {isStartDateVisible && (<DateTimePicker
-                            value={new Date(startDate)}
-                            
-                            mode="date"
-                            onChange={(_, date) => {console.log(+date); setStartDate(+new Date(date)); setStartDateVisible(false);}}
-                        />)}
-                        {isEndDateVisible && (<DateTimePicker
-                            value={new Date(endDate)}
-                            mode="date"
-                            onChange={(_, date) => {setEndDate(+new Date(date)); setEndDateVisible(false);}}
-                        />)}
+                          <DateTimePickerModal
+                                isVisible={isStartDateVisible}
+                                mode="date"
+                                onConfirm={(date)=>setStartDate(new Date(date))}
+                                onCancel={()=>setStartDateVisible(false)}
+                            />
+                          <DateTimePickerModal
+                                isVisible={isEndDateVisible}
+                                mode="date"
+                                onConfirm={(date)=>setEndDate(new Date(date))}
+                                onCancel={()=>setEndDateVisible(false)}
+                            />
                         <Pressable
                             onPress={toggleStartDate}
                             style={({pressed}) => [{opacity: pressed ? 0.8 : 1}]}>
-                                <Text style={{color: 'blue'}}>Set Start Data: <Text>{new Date(startDate).toLocaleDateString()}</Text></Text>
+                                <Text style={{color: 'blue'}}>Set Start Data: <Text>{startDate.toLocaleDateString()}</Text></Text>
                         </Pressable>
                         <Pressable
                             onPress={toggleEndDate}
                             style={({pressed}) => [{opacity: pressed ? 0.8 : 1}]}>
-                                <Text style={{color: 'blue'}}>Set End Data: <Text>{new Date(endDate).toLocaleDateString()}</Text></Text>
+                                <Text style={{color: 'blue'}}>Set End Data: <Text>{endDate.toLocaleDateString()}</Text></Text>
                         </Pressable>
                         <Pressable
                             onPress={toggleModal}

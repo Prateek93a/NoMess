@@ -26,7 +26,7 @@ const AuthStack = createNativeStackNavigator();
 
 export default function App() {
   const [loading, setLoading] = useState(false);
-  const {authData} = useContext(AuthContext);
+  const {authData, setAuthData} = useContext(AuthContext);
 
   useEffect(() => {
     setLoading(true);

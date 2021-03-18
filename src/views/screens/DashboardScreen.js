@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { consumerFabItems, catererFabItems, Fab} from '../components/Fab';
+import categories from '../../constants/categories';
 import {AuthContext} from '../../context/authContext';
 
 const Stack = createStackNavigator();
@@ -15,24 +17,13 @@ export default function DashboardScreen() {
     )
 }
 
-const fabItems = [{type: 'utensils', title: 'Go Eating', screen: 'eat'}, 
-                {type: 'sign-out-alt', title: 'Take Leave', screen: 'leave'},
-                {type: 'file-medical', title: 'Complaint', screen: 'complain'},
-                {type: 'wallet', title: 'Handle Bills', screen: 'bill'}];
 
-function Fab({type, title}){
-    return (
-        <View style={styles.fabView}>
-            <Icon name={type} size={30}/>
-            <Text style={styles.fabText}>
-                    {title}
-                </Text>
-        </View>
-    );
-}
 
 
 function Home({navigation}) {
+    const {authData} = useContext(AuthContext);
+    const {name, typeAccount} = authData;
+    const fabItems = typeAccount == categories[1] ? catererFabItems : consumerFabItems;
     //useEffect(() => {
     //    (async function (){
     //      const authData = await AsyncStorage.getItem('auth-data');
@@ -49,9 +40,6 @@ function Home({navigation}) {
     const handlePress = (screen) => {
         navigation.navigate(screen);
     }
-
-    const {authData} = useContext(AuthContext);
-    const {name} = authData;
 
     return (
         <ScrollView 
@@ -75,12 +63,13 @@ function Home({navigation}) {
                         disableIntervalMomentum
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={styles.carasoul}>
-                            {fabItems.map((item, index) => (<TouchableOpacity 
-                                                                onPress={() => handlePress(item.screen)}
-                                                                key={index}
-                                                                style={styles.fabContainer}>
-                                                                    {Fab(item)}
-                                                            </TouchableOpacity>))}
+                            {fabItems.map((item, index) => (
+                                            <TouchableOpacity 
+                                                onPress={() => handlePress(item.screen)}
+                                                key={index}
+                                                style={styles.fabContainer}>
+                                                    {Fab(item)}
+                                            </TouchableOpacity>))}
                     </ScrollView>
                 </View>
                 <View style={[styles.cardContainer]}>
@@ -161,20 +150,5 @@ const styles = StyleSheet.create({
        minHeight: 200,
        marginTop: 10,
        elevation: 0
-    },
-    fabContainer: {
-        marginRight: 10,
-    },
-    fabView: {
-        backgroundColor: '#efefef',
-        borderRadius: 50,
-        justifyContent:'center',
-        alignItems: 'center',
-        height: 100,
-        width: 100
-    },
-    fabText: {
-        paddingTop: 5,
-        fontSize: 10
     }
 });

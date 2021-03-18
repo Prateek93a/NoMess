@@ -163,13 +163,14 @@ export default function EatScreen({navigation}) {
         setRefreshing(true);
     }
 
+
+
     return (
         <ScrollView 
         contentContainerStyle={{flexGrow: 1}}
         style={styles.container}>
             <View style={styles.header}>
-                <View style={styles.headerButtons}>
-                <Modal 
+            <Modal 
                 animationType='slide'
 	            onRequestClose={toggleModal}
                 hardwareAccelerated
@@ -187,7 +188,8 @@ export default function EatScreen({navigation}) {
                                 {loading ? <ActivityIndicator color='white'/> : <Text style={styles.buttonText}>BUY COUPONS</Text>}
                             </Pressable>
                     </View>
-                </Modal>
+            </Modal>
+                <View style={styles.headerButtons}>
                     <Icon.Button onPress={navigation.openDrawer} name='bars' size={20} backgroundColor='white' color='black'/>
                     <Icon.Button onPress={toggleModal} name='plus' size={20} backgroundColor='white' color='black'/>
                 </View>

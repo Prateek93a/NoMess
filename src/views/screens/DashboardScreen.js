@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+//import { TouchableOpacity } from 'react-native-gesture-handler';
 import { consumerFabItems, catererFabItems, Fab} from '../components/Fab';
 import categories from '../../constants/categories';
 import {AuthContext} from '../../context/authContext';

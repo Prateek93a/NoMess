@@ -65,7 +65,7 @@ export default function RegisterScreen({ route, navigation }) {
                                      password1: password.trim(),
                                      password2: confirmPassword.trim(),
                                      name: name.trim(),
-                                     typeAccount: "string",
+                                     typeAccount: route.params.category,
                                      specialRole: "string",
                                     }),
                 headers: {

@@ -8,7 +8,7 @@ export const consumerFabItems = [{type: 'utensils', title: 'Go Eating', screen: 
                 {type: 'wallet', title: 'Handle Bills', screen: 'bill'}];
 
 export const catererFabItems = [{type: 'file-medical', title: 'Complaints Filed', screen: 'complaint-list'}, 
-                {type: 'sign-out-alt', title: 'Leave Requests', screen: 'leave'},
+                {type: 'sign-out-alt', title: 'Leave Requests', screen: 'leave-list'},
                 {type: 'wallet', title: 'Bills List', screen: 'bill'}];
 
 

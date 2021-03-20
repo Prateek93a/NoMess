@@ -25,8 +25,8 @@ export default function DashboardScreen({navigation}) {
                     <Icon.Button onPress={navigation.openDrawer} name='bars' size={20} backgroundColor='white' color='black'/>
                     <Icon.Button onPress={() => handlePress('profile')} name='cog' size={20} backgroundColor='white' color='black'/>
                 </View>
-                <Text style={styles.welcomeText}>Welcome,</Text>
-                <Text style={styles.welcomeText}>{name} 👋️</Text>
+                <Text style={styles.welcomeText}>👋️ Welcome,</Text>
+                <Text style={styles.welcomeText}>{name}</Text>
             </View>
             <View style={styles.body}> 
                 <View style={styles.carasoulContainer}>

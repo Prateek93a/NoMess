@@ -7,7 +7,7 @@ export const consumerFabItems = [{type: 'utensils', title: 'Go Eating', screen: 
                 {type: 'file-medical', title: 'Complaint', screen: 'complain'},
                 {type: 'wallet', title: 'Handle Bills', screen: 'bill'}];
 
-export const catererFabItems = [{type: 'file-medical', title: 'Complaints Filed', screen: 'complaint-list'}, 
+export const catererFabItems = [{type: 'file-medical', title: 'Complaints', screen: 'complaint-list'}, 
                 {type: 'sign-out-alt', title: 'Leave Requests', screen: 'leave-list'},
                 {type: 'wallet', title: 'Bills List', screen: 'bill'}];
 

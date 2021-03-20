@@ -50,11 +50,6 @@ export default function LeaveScreen({navigation}) {
         style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.headerButtons}>
-                    <LeaveInputModal
-                        toggleModal={toggleInputModal}
-                        isModalVisible={isInputModalVisible}
-                        handleSubmit={handleLeaveSubmit}
-                    />
                     <Icon.Button 
                         onPress={navigation.goBack} 
                         name='arrow-left' 
@@ -73,6 +68,11 @@ export default function LeaveScreen({navigation}) {
                     handleRefresh={refresh}
                 />
             </View>
+            <LeaveInputModal
+                toggleModal={toggleInputModal}
+                isModalVisible={isInputModalVisible}
+                handleSubmit={handleLeaveSubmit}
+            />
             <View style={styles.body}> 
                 <CardDetailsModal
                     toggleModal={toggleLeaveModal}

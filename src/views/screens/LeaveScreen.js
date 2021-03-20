@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Modal, TextInput, Pressable } from 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
+import PageTitle from '../components/PageTitle';
 
 
 export default function LeaveScreen({navigation}) {
@@ -27,6 +28,10 @@ export default function LeaveScreen({navigation}) {
     };
 
     const handleTextChange = (text) => setComplainText(text);
+
+    const refresh = async() => {
+        //setRefreshing(true);
+    }
 
     return (
         <ScrollView 
@@ -80,7 +85,10 @@ export default function LeaveScreen({navigation}) {
                     <Icon.Button onPress={navigation.goBack} name='arrow-left' size={20} backgroundColor='white' color='black'/>
                     <Icon.Button onPress={toggleModal} name='plus' size={20} backgroundColor='white' color='black'/>
                 </View>
-                <Text numberOfLines={2} ellipsizeMode='tail' style={styles.headerText}>Your Leave Applications</Text>
+                <PageTitle
+                    text='Your Leave Applications'
+                    handleRefresh={refresh}
+                />
             </View>
             <View style={styles.body}> 
                 <Card
@@ -123,10 +131,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 0,
         paddingVertical: 10
-    },
-    headerText: {
-        fontSize: 35,
-        fontWeight: 'bold'
     },
     labelText: {
         color: '#aaa'

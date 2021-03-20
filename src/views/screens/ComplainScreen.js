@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import ComplaintModal from '../components/ComplaintModal';
 import ComplaintsInputModal from '../components/ComplaintsInputModal';
 import EmptyList from '../components/EmptyList';
+import PageTitle from '../components/PageTitle';
 
 // todo: merge ComplaintApplicationsScreen and ComplaintScreen into single screen
 
@@ -42,6 +43,10 @@ export default function ComplainScreen({navigation}) {
         // make requests
     }
 
+    const refresh = async() => {
+        //setRefreshing(true);
+    }
+
     return (
         <ScrollView 
         contentContainerStyle={{flexGrow: 1}}
@@ -65,7 +70,10 @@ export default function ComplainScreen({navigation}) {
                         handleSubmit={handleComplaintSubmit}
                     />
                 </View>
-                <Text style={styles.headerText}>Your Complaints</Text>
+                <PageTitle
+                    text='Your Complaints'
+                    handleRefresh={refresh}
+                />
             </View>
             <View style={styles.body}> 
                 <ComplaintModal
@@ -101,10 +109,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 0,
         paddingVertical: 10
-    },
-    headerText: {
-        fontSize: 35,
-        fontWeight: 'bold'
     },
     body: {
         flex: 1,

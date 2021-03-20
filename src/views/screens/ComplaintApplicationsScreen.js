@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
 import ComplaintModal from '../components/ComplaintModal';
 import EmptyList from '../components/EmptyList';
+import PageTitle from '../components/PageTitle';
 
 const complaints = [{id: 0, name: 'Sam', date: 'July 2021',
                      title: 'Unhygeinic Food', body: 'Found an insect in the food.',
@@ -29,6 +30,10 @@ export default function ComplaintApplicationsScreen({navigation}) {
         setModalVisible(isModalVisible);
     };
 
+    const refresh = async() => {
+        //setRefreshing(true);
+    }
+
     return (
         <ScrollView 
         contentContainerStyle={{flexGrow: 1}}
@@ -42,7 +47,10 @@ export default function ComplaintApplicationsScreen({navigation}) {
                         backgroundColor='white' 
                         color='black'/>
                 </View>
-                <Text style={styles.headerText}>Complaints Filed</Text>
+                <PageTitle
+                    text='Complaints Filed'
+                    handleRefresh={refresh}
+                />
             </View>
             <View style={styles.body}> 
                 <ComplaintModal
@@ -78,10 +86,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 0,
         paddingVertical: 10
-    },
-    headerText: {
-        fontSize: 35,
-        fontWeight: 'bold'
     },
     labelText: {
         color: '#aaa'

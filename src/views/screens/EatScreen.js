@@ -11,6 +11,7 @@ import RazorpayCheckout from 'react-native-razorpay';
 import { REQUEST_COUPON, CONFIRM_COUPON_PAYMENT } from '../../constants/urls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import EmptyList from '../components/EmptyList';
+import PageTitle from '../components/PageTitle';
 
 
 export default function EatScreen({navigation}) {
@@ -19,7 +20,6 @@ export default function EatScreen({navigation}) {
     const [couponUUID, setCouponUUID] = useState(0);
     const [numCoupons, setNumCoupons] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -160,8 +160,8 @@ export default function EatScreen({navigation}) {
         setQRVisible(!isQRVisible);
     }
 
-    const refresh = () => {
-        setRefreshing(true);
+    const refresh = async() => {
+        //setRefreshing(true);
     }
 
 
@@ -194,12 +194,10 @@ export default function EatScreen({navigation}) {
                     <Icon.Button onPress={navigation.goBack} name='arrow-left' size={20} backgroundColor='white' color='black'/>
                     <Icon.Button onPress={toggleModal} name='plus' size={20} backgroundColor='white' color='black'/>
                 </View>
-                <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
-                <Text style={styles.headerText}>Your Coupons</Text>
-                <View style={{justifyContent: 'flex-start', alignItems:'center', flex: 1, flexDirection:'row-reverse'}}>
-                    {refreshing ? <ActivityIndicator size={20} color='black'/> : <Icon.Button onPress={refresh} name='sync-alt' size={20} backgroundColor='white' color='black'/>}
-                </View>
-                </View>
+                <PageTitle
+                    text='Your Coupons'
+                    handleRefresh={refresh}
+                />
             </View>
             <View style={styles.body}> 
             <Modal 

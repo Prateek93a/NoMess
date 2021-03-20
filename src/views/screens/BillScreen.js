@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import PageTitle from '../components/PageTitle';
 
 const items = [{billId: 1, title: 'April 2021', billDate: 'April 2021', billAmount: 3000, billStatus: 'Paid'}, 
                {billId: 2, title: 'May 2021', billDate: 'May 2021', billAmount: 3000, billStatus: 'Paid'},
@@ -38,7 +39,7 @@ const ListItemModal = ({billDetails, toggleModal, isModalVisible}) => {
     visible={isModalVisible}>
         <View style={{ backgroundColor:'white', padding: 10 }}>
             <Text >{title}</Text>
-            <Text>Bill ID: {billId}</Text>
+            <Text>Bill ID: {'' + billId}</Text>
             <Text>Bill Date: {billDate}</Text>
             <Text>Bill Amount: {billAmount+''}</Text>
             <Text>Bill Status: {billStatus}</Text>
@@ -59,7 +60,6 @@ export default function BillScreen({navigation}) {
                                 billAmount: 0, 
                                 billStatus: 'Unpaid'};
 
-    const [refreshing, setRefreshing] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [billDetails, setBillDetails] = useState(billDetailsStruct);
 
@@ -69,7 +69,7 @@ export default function BillScreen({navigation}) {
     };
 
     const refresh = () => {
-        setRefreshing(true);
+        //setRefreshing(true);
     };
 
     const renderItem = ({ item }) => <ListItem toggleModal={toggleModal} billDetails={item} />;
@@ -84,22 +84,10 @@ export default function BillScreen({navigation}) {
                     backgroundColor='white' 
                     color='black'/>
                 </View>
-                <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
-                <Text style={styles.headerText}>Your Bills</Text>
-                <View style={{justifyContent: 'flex-start', alignItems:'center', flex: 1, flexDirection:'row-reverse'}}>
-                    {refreshing ? (
-                        <ActivityIndicator
-                             size={20}
-                             color='black'/>) : (
-                        <Icon.Button
-                             onPress={refresh}
-                             name='sync-alt'
-                             size={20} 
-                             backgroundColor='white' 
-                             color='black'/>)
-                    }
-                </View>
-                </View>
+                <PageTitle
+                    text='Your Bills'
+                    handleRefresh={refresh}
+                />
             </View>
             <View style={styles.body}>
                 <ListItemModal

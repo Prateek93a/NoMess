@@ -2,16 +2,35 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, ScrollView, Modal, TextInput, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
+import ComplaintModal from '../components/ComplaintModal';
 
+// todo: merge ComplaintApplicationsScreen and ComplaintScreen into single screen
+
+const complaints = [{id: 0, name: 'Sam', date: 'July 2021',
+                     title: 'Unhygeinic Food', body: 'Found an insect in the food.',
+                     status: 'Resolved', active: false},
+                    {id: 1, name: 'Jack', date: 'August 2021',
+                     title: 'Bad Oil', body: 'Reusing same oil over and over again.', 
+                     status: '', active: true}];
 
 export default function ComplainScreen({navigation}) {
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [complainText, setComplainText] = useState('');
-    const [numComplaints, setNumComplaints] = useState(0);
+    const complaintDetailsStruct = {id: 0,
+        name: '',
+        date: '',
+        title: '',
+        body: '',
+        status: '',
+        active: false};
 
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
+    const [complaintDetails, setComplaintDetails] = useState(complaintDetailsStruct);
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    
+    const toggleComplaintsModal = (isModalVisible, complaintDetails = complaintDetailsStruct) => {
+        setComplaintDetails(complaintDetails);
+        setModalVisible(isModalVisible);
     };
+
 
     const handleTextChange = (text) => setComplainText(text);
 
@@ -21,16 +40,23 @@ export default function ComplainScreen({navigation}) {
         style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.headerButtons}>
-                <Modal 
+                {/*<Modal 
                 animationType='slide'
-	        onRequestClose={toggleModal}
+	            onRequestClose={toggleModal}
                 hardwareAccelerated
                 visible={isModalVisible}>
                     <View style={{ backgroundColor:'white', padding: 10 }}>
                         <Text style={styles.labelText}>What is your complaint?</Text>
                         <TextInput
+                            //onChangeText={handleTextChange}
+                            placeholder='Provide a title'
+                            textAlignVertical='top'
+                            style={{padding: 5, borderRadius: 5, borderWidth: 1, maxHeight: 600, overflow: 'scroll'}}
+                        />
+                        <TextInput
                             onChangeText={handleTextChange}
                             numberOfLines={10}
+                            placeholder='Describe your issue'
                             multiline
                             textAlignVertical='top'
                             style={{padding: 5, borderRadius: 5, borderWidth: 1, maxHeight: 600, overflow: 'scroll'}}
@@ -41,37 +67,38 @@ export default function ComplainScreen({navigation}) {
                                 <Text style={styles.buttonText}>FILE COMPLAINT</Text>
                             </Pressable>
                     </View>
-                </Modal>
-                    <Icon.Button onPress={navigation.goBack} name='arrow-left' size={20} backgroundColor='white' color='black'/>
-                    <Icon.Button onPress={toggleModal} name='plus' size={20} backgroundColor='white' color='black'/>
+                </Modal>*/}
+                    <Icon.Button 
+                        onPress={navigation.goBack} 
+                        name='arrow-left' 
+                        size={20} 
+                        backgroundColor='white' 
+                        color='black'/>
+                    {/*<Icon.Button 
+                        onPress={toggleModal} 
+                        name='plus' size={20} 
+                        backgroundColor='white' 
+                        color='black'/>*/}
                 </View>
                 <Text style={styles.headerText}>Your Complaints</Text>
             </View>
             <View style={styles.body}> 
-                <Card
-                    title='Complaint regarding delays and quality'
-                    date='19/1/10'
-                    id={10}
-                    active={false}
-                    status='Resolved'
-                    onPress={()=>{}}
+                <ComplaintModal
+                    toggleModal={toggleComplaintsModal}
+                    isModalVisible={isModalVisible}
+                    complaintDetails={complaintDetails}
                 />
-                <Card
-                    title='Complaint regarding delays and quality'
-                    date='19/1/10'
-                    id={10}
-                    active={false}
-                    status='Resolved'
-                    onPress={()=>{}}
-                />
-                <Card
-                    title='Complaint regarding delays and quality'
-                    date='19/1/10'
-                    id={10}
-                    active={true}
-                    status='Unresolved'
-                    onPress={()=>{}}
-                />
+                {complaints.map(complaint => (
+                    <Card
+                       key={complaint.id}
+                       title={complaint.title}
+                       date={complaint.date}
+                       id={complaint.id}
+                       active={complaint.active}
+                       status={complaint.status}
+                       onPress={() => toggleComplaintsModal(true, complaint)}
+                   />
+                ))}
             </View>
         </ScrollView>
     )

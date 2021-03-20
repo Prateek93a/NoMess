@@ -17,6 +17,7 @@ import LeaveScreen from './src/views/screens/LeaveScreen';
 import ComplainScreen from './src/views/screens/ComplainScreen';
 import BillScreen from './src/views/screens/BillScreen';
 import ProfileScreen from './src/views/screens/ProfileScreen';
+import ComplaintApplicationsScreen from './src/views/screens/ComplaintApplicationsScreen';
 import {AuthContext} from './src/context/authContext';
 
 enableScreens();
@@ -68,6 +69,7 @@ export default function App() {
         <AuthStack.Screen name='complain' component={ComplainScreen} />
         <AuthStack.Screen name='bill' component={BillScreen} />
         <AuthStack.Screen name='profile' component={ProfileScreen} />
+        <AuthStack.Screen name='complaint-list' component={ComplaintApplicationsScreen} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

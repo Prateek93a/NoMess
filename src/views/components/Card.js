@@ -20,7 +20,7 @@ export default function Card({title, active, status, date, id, onPress}) {
                 </Text>
             </View>
             <View style={styles.bottomTextContainer}>
-                <Text style={styles.subtext}>Status: <Text style={{color: '#fff'}}>{status}</Text></Text>
+                <Text style={styles.subtext}>Status: <Text style={{color: '#fff'}}>{active ? 'Pending' : status}</Text></Text>
             </View>
         </TouchableOpacity>
     )

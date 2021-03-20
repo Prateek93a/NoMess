@@ -125,5 +125,8 @@ const styles = StyleSheet.create({
        minHeight: 200,
        marginTop: 10,
        elevation: 0
-    }
+    },
+        fabContainer: {
+        marginRight: 10,
+    },
 });

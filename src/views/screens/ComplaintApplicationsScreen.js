@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
 import ComplaintModal from '../components/ComplaintModal';
+import EmptyList from '../components/EmptyList';
 
 const complaints = [{id: 0, name: 'Sam', date: 'July 2021',
                      title: 'Unhygeinic Food', body: 'Found an insect in the food.',
@@ -50,7 +51,7 @@ export default function ComplaintApplicationsScreen({navigation}) {
                     complaintDetails={complaintDetails}
                     isCaterer={true}
                 />
-                {complaints.map(complaint => (
+                {complaints.length ? complaints.map(complaint => (
                     <Card
                        key={complaint.id}
                        title={complaint.title}
@@ -60,7 +61,7 @@ export default function ComplaintApplicationsScreen({navigation}) {
                        status={complaint.status}
                        onPress={() => toggleModal(true, complaint)}
                    />
-                ))}
+                )) : <EmptyList text='No complaints filed'/>}
             </View>
         </ScrollView>
     );

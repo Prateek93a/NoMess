@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
-import { View, Text, Image,
+import { View, Text,
          StyleSheet, ScrollView,
          Modal, TextInput,
          Pressable, ActivityIndicator } from 'react-native';
 import Card from '../components/Card';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {emptyImage, logoImage} from '../../constants/images';
+import {logoImage} from '../../constants/images';
 import QRCode from './QRCode';
 import RazorpayCheckout from 'react-native-razorpay';
 import { REQUEST_COUPON, CONFIRM_COUPON_PAYMENT } from '../../constants/urls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import EmptyList from '../components/EmptyList';
 
 
 export default function EatScreen({navigation}) {
@@ -212,10 +213,10 @@ export default function EatScreen({navigation}) {
                 </View>
             </Modal>
                 {numCoupons == 0? (
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}> 
-                    <Image style={{ height: 150, width: 200, resizeMode: 'contain', marginBottom: 30 }} source={emptyImage} />
-                    <Text style={{color: '#555'}}>No coupons available</Text>
-                </View>) : ( <View>
+                <EmptyList
+                    text='No coupons available'
+                />) : (
+                <View>
                     <Card
                         title='Coupon'
                         date='19/1/10'

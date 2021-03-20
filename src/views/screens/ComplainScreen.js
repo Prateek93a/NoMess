@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
 import ComplaintModal from '../components/ComplaintModal';
 import ComplaintsInputModal from '../components/ComplaintsInputModal';
+import EmptyList from '../components/EmptyList';
 
 // todo: merge ComplaintApplicationsScreen and ComplaintScreen into single screen
 
@@ -72,17 +73,18 @@ export default function ComplainScreen({navigation}) {
                     isModalVisible={isComplaintModalVisible}
                     complaintDetails={complaintDetails}
                 />
-                {complaints.map(complaint => (
-                    <Card
-                       key={complaint.id}
-                       title={complaint.title}
-                       date={complaint.date}
-                       id={complaint.id}
-                       active={complaint.active}
-                       status={complaint.status}
-                       onPress={() => toggleComplaintsModal(true, complaint)}
-                   />
-                ))}
+                {complaints.length ? 
+                    complaints.map(complaint => (
+                        <Card
+                        key={complaint.id}
+                        title={complaint.title}
+                        date={complaint.date}
+                        id={complaint.id}
+                        active={complaint.active}
+                        status={complaint.status}
+                        onPress={() => toggleComplaintsModal(true, complaint)}
+                    />
+                    )) : <EmptyList text='No complaints filed'/>}
             </View>
         </ScrollView>
     )

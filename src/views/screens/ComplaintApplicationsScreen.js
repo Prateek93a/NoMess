@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
-import ComplaintModal from '../components/ComplaintModal';
+import CardDetailsModal from '../components/CardDetailsModal';
 import EmptyList from '../components/EmptyList';
 import PageTitle from '../components/PageTitle';
 
@@ -53,10 +53,10 @@ export default function ComplaintApplicationsScreen({navigation}) {
                 />
             </View>
             <View style={styles.body}> 
-                <ComplaintModal
+                <CardDetailsModal
                     toggleModal={toggleModal}
                     isModalVisible={isModalVisible}
-                    complaintDetails={complaintDetails}
+                    details={complaintDetails}
                     isCaterer={true}
                 />
                 {complaints.length ? complaints.map(complaint => (

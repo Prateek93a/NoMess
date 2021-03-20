@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, Modal, StyleSheet, Pressable } from 'react-native';
 
-export default function ComplaintModal({complaintDetails, toggleModal, isModalVisible,
+export default function CardDetailsModal({details, toggleModal, isModalVisible,
                                         isCaterer=false, handleAccept=null, handleReject=null}){
-    const {name, date, id, title, body, status, active} =  complaintDetails;
+    const {name, date, id, title, body, status, active} =  details;
     return (
         <Modal 
         animationType='slide'
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 10,
         flex: 1
-        //width: dimensions.WIDTH - 20,
     },
     buttonText: {
         color: 'white',

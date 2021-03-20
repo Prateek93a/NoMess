@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
-import ComplaintModal from '../components/ComplaintModal';
+import CardDetailsModal from '../components/CardDetailsModal';
 import ComplaintsInputModal from '../components/ComplaintsInputModal';
 import EmptyList from '../components/EmptyList';
 import PageTitle from '../components/PageTitle';
@@ -19,12 +19,12 @@ const complaints = [{id: 0, name: 'Sam', date: 'July 2021',
 
 export default function ComplainScreen({navigation}) {
     const complaintDetailsStruct = {id: 0,
-        name: '',
-        date: '',
-        title: '',
-        body: '',
-        status: '',
-        active: false};
+                                    name: '',
+                                    date: '',
+                                    title: '',
+                                    body: '',
+                                    status: '',
+                                    active: false};
 
     const [complaintDetails, setComplaintDetails] = useState(complaintDetailsStruct);
     const [isComplaintModalVisible, setComplaintModalVisible] = useState(false);
@@ -76,10 +76,10 @@ export default function ComplainScreen({navigation}) {
                 />
             </View>
             <View style={styles.body}> 
-                <ComplaintModal
+                <CardDetailsModal
                     toggleModal={toggleComplaintsModal}
                     isModalVisible={isComplaintModalVisible}
-                    complaintDetails={complaintDetails}
+                    details={complaintDetails}
                 />
                 {complaints.length ? 
                     complaints.map(complaint => (
@@ -91,7 +91,7 @@ export default function ComplainScreen({navigation}) {
                         active={complaint.active}
                         status={complaint.status}
                         onPress={() => toggleComplaintsModal(true, complaint)}
-                    />
+                        />
                     )) : <EmptyList text='No complaints filed'/>}
             </View>
         </ScrollView>

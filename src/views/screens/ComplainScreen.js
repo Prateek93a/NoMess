@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, ScrollView, Modal, TextInput, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
 import ComplaintModal from '../components/ComplaintModal';
+import ComplaintsInputModal from '../components/ComplaintsInputModal';
 
 // todo: merge ComplaintApplicationsScreen and ComplaintScreen into single screen
 
@@ -12,6 +13,7 @@ const complaints = [{id: 0, name: 'Sam', date: 'July 2021',
                     {id: 1, name: 'Jack', date: 'August 2021',
                      title: 'Bad Oil', body: 'Reusing same oil over and over again.', 
                      status: '', active: true}];
+
 
 export default function ComplainScreen({navigation}) {
     const complaintDetailsStruct = {id: 0,
@@ -23,16 +25,21 @@ export default function ComplainScreen({navigation}) {
         active: false};
 
     const [complaintDetails, setComplaintDetails] = useState(complaintDetailsStruct);
-    const [isModalVisible, setModalVisible] = useState(false);
-
+    const [isComplaintModalVisible, setComplaintModalVisible] = useState(false);
+    const [isInputModalVisible, setInputModalVisible] = useState(false);
     
     const toggleComplaintsModal = (isModalVisible, complaintDetails = complaintDetailsStruct) => {
         setComplaintDetails(complaintDetails);
-        setModalVisible(isModalVisible);
+        setComplaintModalVisible(isModalVisible);
     };
 
-
-    const handleTextChange = (text) => setComplainText(text);
+    const toggleInputModal = (isModalVisible) => {
+        setInputModalVisible(isModalVisible);
+    }
+    
+    const handleComplaintSubmit = async(title, body) => {
+        // make requests
+    }
 
     return (
         <ScrollView 
@@ -40,52 +47,29 @@ export default function ComplainScreen({navigation}) {
         style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.headerButtons}>
-                {/*<Modal 
-                animationType='slide'
-	            onRequestClose={toggleModal}
-                hardwareAccelerated
-                visible={isModalVisible}>
-                    <View style={{ backgroundColor:'white', padding: 10 }}>
-                        <Text style={styles.labelText}>What is your complaint?</Text>
-                        <TextInput
-                            //onChangeText={handleTextChange}
-                            placeholder='Provide a title'
-                            textAlignVertical='top'
-                            style={{padding: 5, borderRadius: 5, borderWidth: 1, maxHeight: 600, overflow: 'scroll'}}
-                        />
-                        <TextInput
-                            onChangeText={handleTextChange}
-                            numberOfLines={10}
-                            placeholder='Describe your issue'
-                            multiline
-                            textAlignVertical='top'
-                            style={{padding: 5, borderRadius: 5, borderWidth: 1, maxHeight: 600, overflow: 'scroll'}}
-                        />
-                        <Pressable
-                            onPress={toggleModal}
-                            style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                                <Text style={styles.buttonText}>FILE COMPLAINT</Text>
-                            </Pressable>
-                    </View>
-                </Modal>*/}
                     <Icon.Button 
                         onPress={navigation.goBack} 
                         name='arrow-left' 
                         size={20} 
                         backgroundColor='white' 
                         color='black'/>
-                    {/*<Icon.Button 
-                        onPress={toggleModal} 
+                    <Icon.Button 
+                        onPress={() => toggleInputModal(true)} 
                         name='plus' size={20} 
                         backgroundColor='white' 
-                        color='black'/>*/}
+                        color='black'/>
+                    <ComplaintsInputModal 
+                        toggleModal={toggleInputModal}
+                        isModalVisible={isInputModalVisible}
+                        handleSubmit={handleComplaintSubmit}
+                    />
                 </View>
                 <Text style={styles.headerText}>Your Complaints</Text>
             </View>
             <View style={styles.body}> 
                 <ComplaintModal
                     toggleModal={toggleComplaintsModal}
-                    isModalVisible={isModalVisible}
+                    isModalVisible={isComplaintModalVisible}
                     complaintDetails={complaintDetails}
                 />
                 {complaints.map(complaint => (
@@ -119,22 +103,6 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: 35,
         fontWeight: 'bold'
-    },
-    labelText: {
-        color: '#aaa'
-    },
-    button: {
-        backgroundColor: '#222',
-        paddingVertical: 20,
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop: 10,
-        width: dimensions.WIDTH - 20,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 15,
     },
     body: {
         flex: 1,

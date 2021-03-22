@@ -15,3 +15,6 @@ export const billImage = require('../assets/money.png');
 export const postImage = require('../assets/letter.png');
 export const foodImage = require('../assets/food.jpg');
 export const food2Image = require('../assets/food2.jpg');
+export const profileStudentImage = require('../assets/profile-student.png');
+export const profileCatererImage = require('../assets/profile-caterer.png');
+export const avatarImage = require('../assets/avatar.jpg');

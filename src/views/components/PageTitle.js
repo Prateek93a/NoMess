@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export default function PageTitle({text, handleRefresh}) {
+export default function PageTitle({text, handleRefresh, showRefresh=true}) {
     const [refreshing, setRefreshing] = useState(false);
 
     const handlePress = async() => {
@@ -19,6 +19,7 @@ export default function PageTitle({text, handleRefresh}) {
             style={styles.headerText}>
                 {text}
             </Text>
+            {showRefresh && (
             <View style={styles.refreshIcon}>
                     {refreshing ? (
                     <ActivityIndicator 
@@ -32,6 +33,7 @@ export default function PageTitle({text, handleRefresh}) {
                         color='black'/>)
                     }
                 </View>
+            )}
         </View>
     )
 }
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     headerText: {
-        fontSize: 35,
+        fontSize: 30,
         fontWeight: 'bold'
     },
     refreshIcon: {

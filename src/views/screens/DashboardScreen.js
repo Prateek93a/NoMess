@@ -56,7 +56,7 @@ export default function DashboardScreen({navigation}) {
                     <Text style={styles.labelText}>
                         {typeAccount === categories[1] ? 'Your past posts' : 'See what\'s happening!'}
                     </Text>
-                    {postCardContent.map(item =>  <PostCard item={item} onPress={()=>{}}/>)}
+                    {postCardContent.map((item, index) =>  <PostCard key={index} item={item} onPress={()=>{}}/>)}
                 </View>
             </View>
         </ScrollView>

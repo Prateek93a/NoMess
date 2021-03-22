@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {avatarImage} from '../../constants/images';
@@ -58,12 +59,13 @@ export default function CardDetailsModal({details, toggleModal, isModalVisible,
                         {title}
                     </Text>
                 </View>
-                <View style={styles.bodyContainer}>
+                <ScrollView 
+                style={styles.bodyContainer}>
                     <Text
                     style={styles.bodyText}>
                         {body}
                     </Text>
-                </View>
+                </ScrollView>
                 {isCaterer && (
                 <View style={styles.buttonContainer}>
                     {isComplain ? (
@@ -71,7 +73,7 @@ export default function CardDetailsModal({details, toggleModal, isModalVisible,
                         disabled={!active} 
                         onPress={handleAccept}
                         style={({pressed}) => [ (!pressed && active) && styles.shadow,
-                                                (pressed && active) && {opacity: 0.5}, 
+                                                (pressed && active) && {opacity: 0.8}, 
                                                 styles.button, 
                                                 active ? styles.resolve : styles.disabled]}>
                             <Text style={styles.buttonText}>MARK AS RESOLVED</Text>
@@ -82,7 +84,7 @@ export default function CardDetailsModal({details, toggleModal, isModalVisible,
                             disabled={!active} 
                             onPress={handleReject}
                             style={({pressed}) => [ (!pressed && active) && styles.shadow,
-                                                    (pressed && active) && {opacity: 0.5}, 
+                                                    (pressed && active) && {opacity: 0.8}, 
                                                     styles.button, 
                                                     active ? styles.reject : styles.disabled]}>
                                 <Text style={styles.buttonText}>REJECT</Text>
@@ -91,7 +93,7 @@ export default function CardDetailsModal({details, toggleModal, isModalVisible,
                             disabled={!active} 
                             onPress={handleAccept}
                             style={({pressed}) => [ (!pressed && active) && styles.shadow,
-                                                    (pressed && active) && {opacity: 0.5},
+                                                    (pressed && active) && {opacity: 0.8},
                                                     styles.button, 
                                                     active ? styles.accept : styles.disabled]}>
                                 <Text style={[styles.buttonText, active && {color:'#368039' }]}>ACCEPT</Text>
@@ -181,10 +183,9 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     bodyContainer: {
-        height: 240,
-        overflow: 'scroll',
-        paddingTop: 10,
-        paddingHorizontal: 10
+        maxHeight: 240,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
     },
     bodyText: {
         fontSize: 18,
@@ -208,7 +209,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         paddingHorizontal: 10,
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        paddingTop: 10
     },
     button: {
         flex: 1,

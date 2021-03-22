@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text,  Modal, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import dimensions from '../../constants/dimensions';
 
 export default function LeaveInputModal({toggleModal, isModalVisible, handleSubmit}) {
@@ -56,28 +57,47 @@ export default function LeaveInputModal({toggleModal, isModalVisible, handleSubm
                             style={styles.input}
                         />
                          <Text style={styles.errorMessage}>{reasonError}</Text>
-                          <DateTimePickerModal
-                                isVisible={isStartDateVisible}
-                                mode="date"
-                                onConfirm={(date)=>setStartDate(new Date(date))}
-                                onCancel={()=>setStartDateVisible(false)}
-                            />
-                          <DateTimePickerModal
-                                isVisible={isEndDateVisible}
-                                mode="date"
-                                onConfirm={(date)=>setEndDate(new Date(date))}
-                                onCancel={()=>setEndDateVisible(false)}
-                            />
-                        <Pressable
-                            onPress={toggleStartDate}
-                            style={({pressed}) => [{opacity: pressed ? 0.8 : 1}]}>
-                                <Text style={{color: 'blue'}}>Set Start Data: <Text>{startDate.toLocaleDateString()}</Text></Text>
-                        </Pressable>
-                        <Pressable
-                            onPress={toggleEndDate}
-                            style={({pressed}) => [{opacity: pressed ? 0.8 : 1}]}>
-                                <Text style={{color: 'blue'}}>Set End Data: <Text>{endDate.toLocaleDateString()}</Text></Text>
-                        </Pressable>
+                         <View style={styles.dateContainer}>
+                             <View style={styles.date}>
+                                <Icon
+                                name='calendar-alt'
+                                size={20}
+                                style={styles.dateText}
+                                />
+                                <Pressable
+                                    onPress={toggleStartDate}
+                                    style={({pressed}) => [{opacity: pressed ? 0.8 : 1}]}>
+                                        <Text style={styles.dateText}>{startDate.toLocaleDateString()}</Text>
+                                </Pressable>
+                                <DateTimePickerModal
+                                    isVisible={isStartDateVisible}
+                                    mode="date"
+                                    onConfirm={(date)=>setStartDate(new Date(date))}
+                                    onCancel={()=>setStartDateVisible(false)}
+                                />
+                             </View>
+                            <Text> --- </Text>
+                            <View style={styles.date}>
+                                <Icon
+                                name='calendar-alt'
+                                size={20}
+                                style={styles.dateText}
+                                />
+                                <Pressable
+                                    onPress={toggleEndDate}
+                                    style={({pressed}) => [{opacity: pressed ? 0.8 : 1}]}>
+                                        <Text style={styles.dateText}>{endDate.toLocaleDateString()}</Text>
+                                </Pressable>
+                                <DateTimePickerModal
+                                    isVisible={isEndDateVisible}
+                                    mode="date"
+                                    onConfirm={(date)=>setEndDate(new Date(date))}
+                                    onCancel={()=>setEndDateVisible(false)}
+                                />
+                             </View>
+                        </View>
+                    
+                     
                         <Pressable
                             onPress={handlePress}
                             style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
@@ -120,5 +140,21 @@ const styles = StyleSheet.create({
     errorMessage: {
         color: 'red',
         fontSize: 10
+    },
+    dateContainer: {
+        flexDirection: 'row',
+        paddingTop: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    date: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    dateText: {
+        color: '#0099DB',
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginHorizontal: 2
     }
 });

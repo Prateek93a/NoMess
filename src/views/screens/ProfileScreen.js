@@ -58,7 +58,7 @@ export default function ProfileScreen({navigation}) {
                     </View>
                     <View style={[styles.ticket, {backgroundColor:'purple'}]}>
                         <Text style={styles.ticketText}>
-                        {specialRole == 'string' ? 'No Special Role' : specialRole}
+                        {'No Special Role'}
                         </Text>
                     </View>
                 </View>

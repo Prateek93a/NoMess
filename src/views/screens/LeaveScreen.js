@@ -64,7 +64,7 @@ export default function LeaveScreen({navigation}) {
                         color='black'/>
                 </View>
                 <PageTitle
-                    text='Your Leave Applications'
+                    text='Your Leave Requests'
                     handleRefresh={refresh}
                 />
             </View>
@@ -100,7 +100,7 @@ export default function LeaveScreen({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 5,
+        paddingHorizontal: 3,
         backgroundColor: '#fff'
     },
     headerButtons: {

@@ -4,6 +4,7 @@ import ViewPager from '@react-native-community/viewpager';
 import dimensions from '../../constants/dimensions';
 import {onboardImage1, onboardImage2, onboardImage3} from '../../constants/images';
 import strings from '../../constants/strings';
+import MainButton from '../components/MainButton';
 
 const slides = [{ title: strings.ONBOARDING_TITLE_1, subtext: strings.ONBOARDING_SUBTEXT_1, img: onboardImage1 },
 { title: strings.ONBOARDING_TITLE_2, subtext: strings.ONBOARDING_SUBTEXT_2, img: onboardImage2 },
@@ -51,16 +52,12 @@ export default function OnboardingScreen({ navigation }) {
                     <View style={[styles.dotsBase, page == 2 && styles.dotsSelected]}></View>
                 </View>
                 {page == 2 && (
-                  <MainButton
-                      onPress={handleButtonClick}
-                      title='GET STARTED'
-                  />
-                    //<Pressable
-                    // android_ripple
-                    // onPress={handleButtonClick} 
-                    // style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                    //    <Text style={styles.buttonText}>GET STARTED</Text>
-                    //</Pressable>
+                    <View style={styles.buttonContainer}>
+                        <MainButton
+                            onPress={handleButtonClick}
+                            title='GET STARTED'
+                        />
+                    </View>
                 )}
             </View>
         </View>
@@ -98,19 +95,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         textAlign: 'center'
     },
-    //button: {
-    //    backgroundColor: '#222',
-    //    paddingVertical: 20,
-    //    marginHorizontal: 10,
-    //    alignItems: 'center',
-    //    borderRadius: 10,
-    //    marginTop: 20,
-    //},
-    //buttonText: {
-    //    color: 'white',
-    //    fontWeight: 'bold',
-    //    fontSize: 15,
-    //},
+    buttonContainer: {
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingTop: 20
+    },
     img: {
         height: 400,
         width: dimensions.WIDTH,

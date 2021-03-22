@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import PageTitle from '../components/PageTitle';
 
@@ -30,24 +31,51 @@ const ListItem = ({ billDetails, toggleModal }) => (
 );
 
 const ListItemModal = ({billDetails, toggleModal, isModalVisible}) => {
-    const {title, billId, billDate, billAmount, billStatus} = billDetails;
+    const {billId, billDate, billAmount, billStatus} = billDetails;
     return (
     <Modal 
-    animationType='slide'
-    onRequestClose={() => toggleModal(false)}
-    hardwareAccelerated
-    visible={isModalVisible}>
-        <View style={{ backgroundColor:'white', padding: 10 }}>
-            <Text >{title}</Text>
-            <Text>Bill ID: {'' + billId}</Text>
-            <Text>Bill Date: {billDate}</Text>
-            <Text>Bill Amount: {billAmount+''}</Text>
-            <Text>Bill Status: {billStatus}</Text>
-            {/*{billStatus == 'Unpaid' && (
-                <TouchableOpacity
-                    onPress={handlePress}>
-                        PAY
-                </TouchableOpacity>)}*/}
+    onBackdropPress={() => toggleModal(false)}
+    onBackButtonPress={() => toggleModal(false)}
+    useNativeDriver
+    animationIn='slideInUp'
+    hasBackdrop={true}
+    backdropOpacity={0.8}
+    statusBarTranslucent
+    backdropColor={'rgba(0, 0, 0, 0.8)'}
+    animationOut='slideOutDown'
+    isVisible={isModalVisible}>
+        <View style={styles.modalContainer}>
+            <View style={styles.modalHeaderContainer}>
+                <Text style={styles.modalHeaderText}>
+                    #{billId}
+                </Text>
+                <View style={[styles.statusContainer, billStatus != 'Paid' && styles.active]}>
+                        <Text style={styles.statusText}>
+                            {billStatus != 'Paid' ? 'Not Paid' : billStatus}
+                        </Text>
+                </View>
+            </View>
+            <View style={styles.modalBodyContainer}>
+                <Text style={styles.labelText}>Bill Details</Text>
+                <View style={styles.billDetails}>
+                    <Icon
+                    name='calendar-alt'
+                    size={20}
+                    />
+                    <Text style={styles.billDetailsText}>
+                        {billDate}
+                    </Text>
+                </View>
+                <View style={styles.billDetails}>
+                    <Icon
+                    name='rupee-sign'
+                    size={20}
+                    />
+                    <Text style={styles.billDetailsText}>
+                        {billAmount+''}
+                    </Text>
+                </View>
+            </View>
         </View>
     </Modal>
 )};
@@ -63,7 +91,7 @@ export default function BillScreen({navigation}) {
     const [isModalVisible, setModalVisible] = useState(false);
     const [billDetails, setBillDetails] = useState(billDetailsStruct);
 
-    const toggleModal = (modalVisible, bill = billDetailsStruct) => {
+    const toggleModal = (modalVisible, bill = billDetails) => {
         setBillDetails(bill);
         setModalVisible(modalVisible);
     };
@@ -153,5 +181,51 @@ const styles = StyleSheet.create({
     listItemTitle: {
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    modalContainer: { 
+        flex: 1,
+        maxHeight: 200,
+        backgroundColor:'white', 
+        padding: 15,
+        borderRadius: 5
+    },
+    modalHeaderContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    modalHeaderText: {
+        fontSize: 18,
+        color: '#555',
+        fontWeight: 'bold'
+    },
+    statusContainer: {
+        backgroundColor: '#0099DB',
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 5
+    },
+    labelText: {
+        color: '#aaa'
+    },
+    statusText: {
+        color: '#fff',
+        fontWeight: 'bold'
+    },
+    active:  {
+        backgroundColor: '#F98B26'
+    },
+    modalBodyContainer: {
+        paddingTop: 20
+    },  
+    billDetails: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    billDetailsText: {
+        fontSize: 16,
+        marginLeft: 10,
+        color: '#333'
     }
 });

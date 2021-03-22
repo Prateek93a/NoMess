@@ -6,10 +6,10 @@ import CardDetailsModal from '../components/CardDetailsModal';
 import EmptyList from '../components/EmptyList';
 import PageTitle from '../components/PageTitle';
 
-const complaints = [{id: 0, name: 'Sam', date: 'July 2021',
+const complaints = [{id: 0, name: 'Sam Wilson', date: 'July 2021',
                      title: 'Unhygeinic Food', body: 'Found an insect in the food.',
                      status: 'Resolved', active: false},
-                    {id: 1, name: 'Jack', date: 'August 2021',
+                    {id: 1, name: 'Jack Kirby', date: 'August 2021',
                      title: 'Bad Oil', body: 'Reusing same oil over and over again.', 
                      status: '', active: true}];
 
@@ -61,6 +61,7 @@ export default function ComplaintApplicationsScreen({navigation}) {
                 />
                 {complaints.length ? complaints.map(complaint => (
                     <Card
+                       name={complaint.name}
                        key={complaint.id}
                        title={complaint.title}
                        date={complaint.date}
@@ -93,5 +94,5 @@ const styles = StyleSheet.create({
     body: {
         flex: 1,
         paddingTop: 30
-    },
+    }
 });

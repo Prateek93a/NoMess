@@ -7,10 +7,10 @@ import PageTitle from '../components/PageTitle';
 import EmptyList from '../components/EmptyList';
 import LeaveInputModal from '../components/LeaveInputModal';
 
-const leaveApplications = [{id: 0, name: 'Sam', date: 'July 2021',
+const leaveApplications = [{id: 0, name: 'Sam Wilson', date: 'July 2021',
                         title: 'Leave Application', body: 'Going out of station.',
                         status: 'Resolved', active: false},
-                        {id: 1, name: 'Jack', date: 'August 2021',
+                        {id: 1, name: 'Jack Kirby', date: 'August 2021',
                         body: 'Going out of station.', title: 'Leave Application',
                         status: '', active: true}];
 
@@ -78,6 +78,7 @@ export default function LeaveScreen({navigation}) {
                     toggleModal={toggleLeaveModal}
                     isModalVisible={isLeaveModalVisible}
                     details={leaveDetails}
+                    isComplain={false}
                 />
                 {leaveApplications.length ? leaveApplications.map(leave => (
                       <Card
@@ -111,5 +112,5 @@ const styles = StyleSheet.create({
     body: {
         flex: 1,
         paddingTop: 30
-    },
+    }
 });

@@ -6,10 +6,10 @@ import CardDetailsModal from '../components/CardDetailsModal';
 import EmptyList from '../components/EmptyList';
 import PageTitle from '../components/PageTitle';
 
-const leaveApplications = [{id: 0, name: 'Sam', date: 'July 2021',
+const leaveApplications = [{id: 0, name: 'Sam Wilson', date: 'July 2021',
                         title: 'Leave Application', body: 'Going out of station.',
                         status: 'Resolved', active: false},
-                        {id: 1, name: 'Jack', date: 'August 2021',
+                        {id: 1, name: 'Jack Kirby', date: 'August 2021',
                         body: 'Going out of station.', title: 'Leave Application',
                         status: '', active: true}];
 
@@ -59,9 +59,11 @@ export default function LeaveApplicationsScreen({navigation}) {
                     isModalVisible={isModalVisible}
                     details={leaveDetails}
                     isCaterer={true}
+                    isComplain={false}
                 />
                 {leaveApplications.length ? leaveApplications.map(leave => (
                     <Card
+                       name={leave.name}
                        key={leave.id}
                        title={leave.title}
                        date={leave.date}

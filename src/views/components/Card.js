@@ -38,7 +38,7 @@ export default function Card({name='John Doe', title, active, status, date, id, 
                             {date}
                         </Text>
                     </View>
-                    <View style={[styles.statusContainer, styles.shadow, active && styles.active]}>
+                    <View style={[styles.statusContainer, active && styles.active]}>
                         <Text style={styles.statusText}>
                             {active ? 'Pending' : status}
                         </Text>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     },
     subText: {
         fontSize: 15,
-        color: '#888',
+        color: '#666',
         fontWeight: 'bold'
     }, 
     imgBackground: {

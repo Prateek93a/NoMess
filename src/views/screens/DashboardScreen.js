@@ -31,7 +31,7 @@ export default function DashboardScreen({navigation}) {
                     <Icon.Button onPress={() => handlePress('profile')} name='cog' size={20} backgroundColor='white' color='black'/>
                 </View>
                 <Text style={styles.welcomeText}>👋️ Welcome,</Text>
-                <Text style={styles.welcomeText}>{name+' Singh Tomar'}</Text>
+                <Text style={styles.welcomeText}>{name}</Text>
             </View>
             <View style={styles.body}> 
                 <View style={styles.carasoulContainer}>

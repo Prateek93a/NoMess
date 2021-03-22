@@ -71,7 +71,7 @@ export default function CardDetailsModal({details, toggleModal, isModalVisible,
                         disabled={!active} 
                         onPress={handleAccept}
                         style={({pressed}) => [ (!pressed && active) && styles.shadow,
-                                                (pressed && active), 
+                                                (pressed && active) && {opacity: 0.5}, 
                                                 styles.button, 
                                                 active ? styles.resolve : styles.disabled]}>
                             <Text style={styles.buttonText}>MARK AS RESOLVED</Text>
@@ -82,7 +82,7 @@ export default function CardDetailsModal({details, toggleModal, isModalVisible,
                             disabled={!active} 
                             onPress={handleReject}
                             style={({pressed}) => [ (!pressed && active) && styles.shadow,
-                                                    (pressed && active), 
+                                                    (pressed && active) && {opacity: 0.5}, 
                                                     styles.button, 
                                                     active ? styles.reject : styles.disabled]}>
                                 <Text style={styles.buttonText}>REJECT</Text>

@@ -54,7 +54,7 @@ export default function DashboardScreen({navigation}) {
                 </View>
                 <View style={[styles.cardContainer]}>
                     <Text style={styles.labelText}>
-                        {typeAccount === categories[1] ? 'Your past posts' : 'See what\'s happening!'}
+                        {typeAccount === categories[1] ? 'Your previous posts!' : 'See what\'s happening!'}
                     </Text>
                     {postCardContent.map((item, index) =>  <PostCard key={index} item={item} onPress={()=>{}}/>)}
                 </View>

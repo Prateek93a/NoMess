@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Pressable, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import {AuthContext} from '../../context/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -83,6 +83,12 @@ export default function ProfileScreen({navigation}) {
                         </Text>
                     </View>
                 </View>
+                {typeAccount != categories[1] && (
+                    <View style={styles.contactContainer}>
+                        <Text style={styles.labelText}>Billing Mode</Text>
+
+                    </View>
+                )}
             </View>
             <View style={styles.buttonContainer}>
                 <MainButton
@@ -183,7 +189,8 @@ const styles = StyleSheet.create({
     },
     contactText: {
         fontSize: 15,
-        marginLeft: 10
+        marginLeft: 10,
+        color: '#555'
     },
     buttonContainer: {
         alignItems: 'center',

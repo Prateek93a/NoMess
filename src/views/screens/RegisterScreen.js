@@ -4,6 +4,7 @@ import {AuthContext} from '../../context/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import dimensions from '../../constants/dimensions';
 import {REGISTER} from '../../constants/urls';
+import MainButton from '../components/MainButton';
 
 const passwordRules = "required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;";
 
@@ -137,12 +138,17 @@ export default function RegisterScreen({ route, navigation }) {
                  style={styles.textInput} />
                  <Text style={styles.errorMessage}>{passwordError}</Text>
 
-                <Pressable
-                 onPress={handleRegisterClick}
+                 <MainButton
+                    loading={loading}
+                    onPress={handleRegisterClick}
+                    title='REGISTER'
+                />
+                {/*<Pressable
+                 onPress={}
                  disabled={loading}
                  style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
                     {loading ? <ActivityIndicator color='white'/> : <Text style={styles.buttonText}>REGISTER</Text>}
-                </Pressable>
+                </Pressable>*/}
             </View>
             <View style={styles.logintextview}>
                 <Text style={{ color: '#555' }}>Already have an account? </Text>
@@ -176,19 +182,19 @@ const styles = StyleSheet.create({
         color: 'orange',
         fontWeight: 'bold'
     },
-    button: {
-        backgroundColor: '#222',
-        paddingVertical: 20,
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop: 10,
-        width: dimensions.WIDTH-20,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 15,
-    },
+    //button: {
+    //    backgroundColor: '#222',
+    //    paddingVertical: 20,
+    //    alignItems: 'center',
+    //    borderRadius: 10,
+    //    marginTop: 10,
+    //    width: dimensions.WIDTH-20,
+    //},
+    //buttonText: {
+    //    color: 'white',
+    //    fontWeight: 'bold',
+    //    fontSize: 15,
+    //},
     errorMessage: {
         color: 'red',
         fontSize: 10

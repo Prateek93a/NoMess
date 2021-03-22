@@ -4,6 +4,7 @@ import ViewPager from '@react-native-community/viewpager';
 import dimensions from '../../constants/dimensions';
 import {studentImage, chefImage, guestImage} from '../../constants/images';
 import categories from '../../constants/categories';
+import MainButton from '../components/MainButton';
 
 const slides = [studentImage, chefImage, guestImage];
 
@@ -58,11 +59,15 @@ export default function CategoryScreen({ navigation }) {
                     <View style={[styles.dotsBase, page == 2 && styles.dotsSelected]}></View>
                 </View>
                 <View style={{ alignItems: 'center', paddingTop: 10 }}>
-                    <Pressable
+                <MainButton
+                    onPress={() => handleButtonClick(page)}
+                    title={categories[page]}
+                />
+                    {/*<Pressable
                      onPress={() => handleButtonClick(page)}
                      style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
                         <Text style={styles.buttonText}>{categories[page]}</Text>
-                    </Pressable>
+                    </Pressable>*/}
                 </View>
             </View>
         </View>
@@ -104,20 +109,20 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#555'
     },
-    button: {
-        backgroundColor: '#222',
-        paddingVertical: 20,
-        marginHorizontal: 10,
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop: 10,
-        width: dimensions.WIDTH - 20,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 15,
-    },
+    //button: {
+    //    backgroundColor: '#222',
+    //    paddingVertical: 20,
+    //    marginHorizontal: 10,
+    //    alignItems: 'center',
+    //    borderRadius: 10,
+    //    marginTop: 10,
+    //    width: dimensions.WIDTH - 20,
+    //},
+    //buttonText: {
+    //    color: 'white',
+    //    fontWeight: 'bold',
+    //    fontSize: 15,
+    //},
     img: {
         height: 300,
         width: 300,

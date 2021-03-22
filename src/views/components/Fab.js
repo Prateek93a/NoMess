@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         height: 140,
         width: 100,
-        backgroundColor : "#fff",
+        backgroundColor : '#fff',
     },
     fabContainer: {
         flex: 1,

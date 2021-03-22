@@ -81,6 +81,7 @@ export default function LeaveScreen({navigation}) {
                 />
                 {leaveApplications.length ? leaveApplications.map(leave => (
                       <Card
+                      name={leave.name}
                       key={leave.id}
                       title={leave.title}
                       date={leave.date}

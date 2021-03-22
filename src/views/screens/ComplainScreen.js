@@ -84,6 +84,7 @@ export default function ComplainScreen({navigation}) {
                 {complaints.length ? 
                     complaints.map(complaint => (
                         <Card
+                        name={complaint.name}
                         key={complaint.id}
                         title={complaint.title}
                         date={complaint.date}

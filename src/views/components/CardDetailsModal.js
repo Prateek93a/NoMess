@@ -20,13 +20,13 @@ export default function CardDetailsModal({details, toggleModal, isModalVisible,
                 {isCaterer && (
                 <View style={styles.buttonContainer}>
                     <Pressable
-                    disabled={active} 
+                    disabled={!active} 
                     onPress={handleReject}
                     style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button, styles.reject]}>
                         <Text style={styles.buttonText}>REJECT</Text>
                     </Pressable>
                     <Pressable
-                    disabled={active} 
+                    disabled={!active} 
                     onPress={handleAccept}
                     style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button, styles.accept]}>
                         <Text style={styles.buttonText}>ACCEPT</Text>

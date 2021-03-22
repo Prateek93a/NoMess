@@ -4,6 +4,7 @@ import {AuthContext} from '../../context/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import dimensions from '../../constants/dimensions';
 import {LOGIN_URL, USER} from '../../constants/urls';
+import MainButton from '../components/MainButton';
 
 export default function LoginScreen() {
     const {setAuthData} = useContext(AuthContext);
@@ -113,12 +114,17 @@ export default function LoginScreen() {
                     placeholder='Password'
                     style={styles.textInput}/>
                 <Text style={styles.errorMessage}>{passwordError}</Text>
-                <Pressable
+                <MainButton
+                    loading={loading}
+                    onPress={handleLoginClick}
+                    title='LOGIN'
+                />
+                {/*<Pressable
                  disabled={loading}
-                 onPress={handleLoginClick}
+                 onPress={}
                  style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
                      {loading ? <ActivityIndicator color='white'/> : <Text style={styles.buttonText}>LOGIN</Text>}
-                </Pressable>
+                </Pressable>*/}
                 <Text style={styles.errorMessage}>{authError}</Text>
             </View>
         </SafeAreaView>
@@ -139,19 +145,19 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 10
     },
-    button: {
-        backgroundColor: '#222',
-        paddingVertical: 20,
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop: 10,
-        width: dimensions.WIDTH - 20,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 15,
-    },
+    //button: {
+    //    backgroundColor: '#222',
+    //    paddingVertical: 20,
+    //    alignItems: 'center',
+    //    borderRadius: 10,
+    //    marginTop: 10,
+    //    width: dimensions.WIDTH - 20,
+    //},
+    //buttonText: {
+    //    color: 'white',
+    //    fontWeight: 'bold',
+    //    fontSize: 15,
+    //},
     errorMessage: {
         color: 'red',
         fontSize: 10

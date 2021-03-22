@@ -1,16 +1,20 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-//import { TouchableOpacity } from 'react-native-gesture-handler';
+import {foodImage, food2Image} from '../../constants/images';
 import { consumerFabItems, catererFabItems, Fab} from '../components/Fab';
 import categories from '../../constants/categories';
 import {AuthContext} from '../../context/authContext';
+import PostCard from '../components/PostCard';
+
+const postCardContent = [{title: 'Mess Manager Changed', date: '19/10/2021', img: foodImage},
+                         {title: 'Dinner Time Extended', date: '10/2/2021', img: food2Image}]
 
 
 export default function DashboardScreen({navigation}) {
     const {authData} = useContext(AuthContext);
     const {name, typeAccount} = authData;
-    const fabItems = typeAccount == categories[1] ? catererFabItems : consumerFabItems;
+    const fabItems = typeAccount === categories[1] ? catererFabItems : consumerFabItems;
 
     const handlePress = (screen) => {
         navigation.navigate(screen);
@@ -19,6 +23,7 @@ export default function DashboardScreen({navigation}) {
     return (
         <ScrollView 
         contentContainerStyle={{flexGrow: 1}}
+        showsVerticalScrollIndicator={false}
         style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.headerButtons}>
@@ -26,7 +31,7 @@ export default function DashboardScreen({navigation}) {
                     <Icon.Button onPress={() => handlePress('profile')} name='cog' size={20} backgroundColor='white' color='black'/>
                 </View>
                 <Text style={styles.welcomeText}>👋️ Welcome,</Text>
-                <Text style={styles.welcomeText}>{name}</Text>
+                <Text style={styles.welcomeText}>{name+' Singh Tomar'}</Text>
             </View>
             <View style={styles.body}> 
                 <View style={styles.carasoulContainer}>
@@ -39,25 +44,19 @@ export default function DashboardScreen({navigation}) {
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={styles.carasoul}>
                             {fabItems.map((item, index) => (
-                                            <TouchableOpacity 
-                                                onPress={() => handlePress(item.screen)}
-                                                key={index}
-                                                style={styles.fabContainer}>
-                                                    {Fab(item)}
-                                            </TouchableOpacity>))}
+                                <Fab 
+                                    key={index}
+                                    onPress={() => handlePress(item.screen)} 
+                                    item={item}
+                                />)
+                            )}
                     </ScrollView>
                 </View>
                 <View style={[styles.cardContainer]}>
-                    <Text style={styles.labelText}>See what's happening!</Text>
-                    <View style={[styles.cardBase, styles.card]}>
-                        <Text>Mess Manager Changed</Text>
-                    </View>
-                    <View style={[styles.cardBase, styles.card]}>
-
-                    </View>
-                    <View style={[styles.cardBase, styles.card]}>
-
-                    </View>
+                    <Text style={styles.labelText}>
+                        {typeAccount === categories[1] ? 'Your past posts' : 'See what\'s happening!'}
+                    </Text>
+                    {postCardContent.map(item =>  <PostCard item={item} onPress={()=>{}}/>)}
                 </View>
             </View>
         </ScrollView>
@@ -71,9 +70,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         backgroundColor: '#fff'
     },
-    header: {
-        flex: 2
-    },
     headerButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -81,7 +77,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10
     },
     body: {
-        flex: 3,
         paddingTop: 20
     },
     welcomeText: {
@@ -92,21 +87,10 @@ const styles = StyleSheet.create({
         color: '#aaa'
     },
     carasoulContainer: {
-        flex: 1
+        flex: 1,
     },
     carasoul: {
         paddingVertical: 10,
-    },
-    cardBase: {
-        borderRadius: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 6,
     },
     carasoulCard: {
         height: '100%',
@@ -118,15 +102,5 @@ const styles = StyleSheet.create({
     cardContainer: {
         flex: 2,
         paddingTop: 10
-    },
-    card: {
-       backgroundColor: '#efefef' ,
-       borderRadius: 10,
-       minHeight: 200,
-       marginTop: 10,
-       elevation: 0
-    },
-        fabContainer: {
-        marginRight: 10,
     },
 });

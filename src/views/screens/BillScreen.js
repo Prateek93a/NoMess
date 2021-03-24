@@ -16,16 +16,18 @@ const ListHeader = ({text}) => {
 }
             
 
-const ListItem = ({ billDetails, toggleModal }) => (
+const ListItem = ({ billDetails, toggleModal, isPending=false }) => (
     <TouchableOpacity
     onPress={() => toggleModal(true, billDetails)}>
         <View style={styles.listItemContainer}>
             <Text style={styles.listItemTitle}>{billDetails.title}</Text>
-            <Icon  
+            {isPending && (
+                <Icon  
                 name='chevron-right'
                 size={15}
                 backgroundColor='white'
                 color='black'/>
+            )}
         </View>
     </TouchableOpacity>
 );
@@ -47,7 +49,7 @@ const ListItemModal = ({billDetails, toggleModal, isModalVisible}) => {
         <View style={styles.modalContainer}>
             <View style={styles.modalHeaderContainer}>
                 <Text style={styles.modalHeaderText}>
-                    #{billId}
+                    #{billId + ''}
                 </Text>
                 <View style={[styles.statusContainer, billStatus != 'Paid' && styles.active]}>
                         <Text style={styles.statusText}>
@@ -124,7 +126,10 @@ export default function BillScreen({navigation}) {
                     billDetails={billDetails}
                 />
                 <ListHeader text='Pending Bills'/>
-                <ListItem toggleModal={toggleModal} billDetails={billDetailsStruct}/>
+                <ListItem 
+                toggleModal={toggleModal} 
+                billDetails={billDetailsStruct}
+                isPending={true}/>
                 <ListHeader text='Bill History'/>
                 <FlatList
                     data={items}

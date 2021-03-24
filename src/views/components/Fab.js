@@ -2,19 +2,19 @@ import React from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import {complainImage, leaveImage, billImage, couponImage, postImage} from '../../constants/images';
 
-export const consumerFabItems = [{type: couponImage, title: 'Go Out For Eating', screen: 'eat'}, 
-                {type: leaveImage, title: 'Apply For Leave', screen: 'leave'},
-                {type: complainImage, title: 'File A Complaint', screen: 'complain'},
-                {type: billImage, title: 'View Bill History', screen: 'bill'}];
+export const consumerFabItems = [{type: couponImage, titleTop: 'Go For', titleBottom: 'Eating', screen: 'eat'}, 
+                {type: leaveImage, titleTop: 'Apply For', titleBottom: 'Leaves', screen: 'leave'},
+                {type: complainImage, titleTop: 'File', titleBottom: 'Complaints', screen: 'complain'},
+                {type: billImage, titleTop: 'Handle', titleBottom: 'Transactions', screen: 'bill'}];
 
-export const catererFabItems = [{type: complainImage, title: 'Review Complaints', screen: 'complaint-list'}, 
-                {type: leaveImage, title: 'Leave Requests', screen: 'leave-list'},
-                {type: billImage, title: 'Handle Transaction', screen: 'bill'},
-                {type: postImage, title: 'Post an Update', screen: 'bill'}];
+export const catererFabItems = [{type: postImage, titleTop: 'Post', titleBottom: 'Updates', screen: 'bill'},
+                {type: complainImage, titleTop: 'Review', titleBottom: 'Complaints', screen: 'complaint-list'}, 
+                {type: leaveImage, titleTop: 'Leave', titleBottom: 'Requests', screen: 'leave-list'},
+                {type: billImage, titleTop: 'Handle', titleBottom: 'Transactions', screen: 'bill'}];
 
 
 export function Fab({item, onPress}){
-    const {type, title} = item;
+    const {type, titleTop, titleBottom} = item;
     return (
         <Pressable 
             onPress={onPress}
@@ -24,8 +24,11 @@ export function Fab({item, onPress}){
                     <Image source={type} style={styles.img}/>
                 </View>
                 <View style={styles.fabContent}>
-                    <Text numberOfLines={2} style={styles.fabText}>
-                        {title}
+                    <Text style={styles.fabText}>
+                        {titleTop}
+                    </Text>
+                    <Text style={styles.fabText}>
+                        {titleBottom}
                     </Text>
                 </View>
             </View>

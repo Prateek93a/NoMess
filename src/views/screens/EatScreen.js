@@ -235,9 +235,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         backgroundColor: '#fff'
     },
-    header: {
-        flex: 2
-    },
     headerButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -265,7 +262,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     body: {
-        flex: 3,
+        flex: 1,
         paddingTop: 20
     },
 });

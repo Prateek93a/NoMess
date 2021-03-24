@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import {complainImage, leaveImage, billImage, couponImage, postImage} from '../../constants/images';
 
 export const consumerFabItems = [{type: couponImage, titleTop: 'Go For', titleBottom: 'Eating', screen: 'eat'}, 
-                {type: leaveImage, titleTop: 'Apply For', titleBottom: 'Leaves', screen: 'leave'},
-                {type: complainImage, titleTop: 'File', titleBottom: 'Complaints', screen: 'complain'},
+                {type: leaveImage, titleTop: 'Apply For', titleBottom: 'Leave', screen: 'leave'},
+                {type: complainImage, titleTop: 'File A', titleBottom: 'Complaint', screen: 'complain'},
                 {type: billImage, titleTop: 'Handle', titleBottom: 'Transactions', screen: 'bill'}];
 
 export const catererFabItems = [{type: postImage, titleTop: 'Post', titleBottom: 'Updates', screen: 'bill'},

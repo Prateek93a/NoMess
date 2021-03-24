@@ -53,21 +53,16 @@ export default function CategoryScreen({ navigation }) {
                 </ViewPager>
             </View>
             <View style={styles.indicator}>
-                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <View style={styles.dotContainer}>
                     <View style={[styles.dotsBase, page == 0 && styles.dotsSelected]}></View>
                     <View style={[styles.dotsBase, page == 1 && styles.dotsSelected]}></View>
                     <View style={[styles.dotsBase, page == 2 && styles.dotsSelected]}></View>
                 </View>
-                <View style={{ alignItems: 'center', paddingTop: 10 }}>
-                <MainButton
-                    onPress={() => handleButtonClick(page)}
-                    title={categories[page]}
-                />
-                    {/*<Pressable
-                     onPress={() => handleButtonClick(page)}
-                     style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                        <Text style={styles.buttonText}>{categories[page]}</Text>
-                    </Pressable>*/}
+                <View style={styles.buttonContainer}>
+                    <MainButton
+                        onPress={() => handleButtonClick(page)}
+                        title={categories[page]}
+                    />
                 </View>
             </View>
         </View>
@@ -109,20 +104,15 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#555'
     },
-    //button: {
-    //    backgroundColor: '#222',
-    //    paddingVertical: 20,
-    //    marginHorizontal: 10,
-    //    alignItems: 'center',
-    //    borderRadius: 10,
-    //    marginTop: 10,
-    //    width: dimensions.WIDTH - 20,
-    //},
-    //buttonText: {
-    //    color: 'white',
-    //    fontWeight: 'bold',
-    //    fontSize: 15,
-    //},
+    buttonContainer: {
+        alignItems: 'center', 
+        justifyContent: 'flex-end', 
+        paddingTop: 20
+    },
+    dotContainer: { 
+        flexDirection: 'row', 
+        justifyContent: 'center' 
+    },
     img: {
         height: 300,
         width: 300,

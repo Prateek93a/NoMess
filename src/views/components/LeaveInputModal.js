@@ -3,6 +3,7 @@ import { View, Text,  Modal, TextInput, Pressable, StyleSheet, ActivityIndicator
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import dimensions from '../../constants/dimensions';
+import MainButton from './MainButton';
 
 export default function LeaveInputModal({toggleModal, isModalVisible, handleSubmit}) {
     const [reasonText, setReasonText] = useState('');
@@ -36,6 +37,7 @@ export default function LeaveInputModal({toggleModal, isModalVisible, handleSubm
 
         setLoading(false);
         setReasonText('');
+        setReasonError('');
         toggleModal(false);
     }
 
@@ -96,13 +98,13 @@ export default function LeaveInputModal({toggleModal, isModalVisible, handleSubm
                                 />
                              </View>
                         </View>
-                    
-                     
-                        <Pressable
-                            onPress={handlePress}
-                            style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                                {loading ? <ActivityIndicator color='white'/> : <Text style={styles.buttonText}>APPLY FOR LEAVE</Text>}
-                        </Pressable>
+                    <View style={styles.buttonContainer}>
+                        <MainButton
+                        loading={loading}
+                        onPress={handlePress}
+                        title='APPLY FOR LEAVE'
+                        />
+                    </View>
                     </View>
                 </Modal>
         </View>
@@ -124,18 +126,8 @@ const styles = StyleSheet.create({
         maxHeight: 600, 
         overflow: 'scroll'
     },
-    button: {
-        backgroundColor: '#222',
-        paddingVertical: 20,
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop: 10,
-        width: dimensions.WIDTH - 20,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 15,
+    buttonContainer: {
+        paddingTop: 20
     },
     errorMessage: {
         color: 'red',

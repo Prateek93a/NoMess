@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, Modal, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import dimensions from '../../constants/dimensions';
+import MainButton from './MainButton';
 
 export default function ComplaintsInputModal({toggleModal, isModalVisible, handleSubmit}) {
     const [title, setTitle] = useState('');
@@ -30,6 +31,8 @@ export default function ComplaintsInputModal({toggleModal, isModalVisible, handl
         setLoading(false);
         setTitle('');
         setBody('');
+        setTitleError('');
+        setBodyError('');
         toggleModal(false);
     }
 
@@ -59,11 +62,13 @@ export default function ComplaintsInputModal({toggleModal, isModalVisible, handl
                             style={[styles.input, styles.inputMultiline]}
                         />
                         <Text style={styles.errorMessage}>{bodyError}</Text>
-                        <Pressable
+                        <View style={styles.buttonContainer}>
+                            <MainButton
+                            loading={loading}
                             onPress={handlePress}
-                            style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                                {loading ? <ActivityIndicator color='white'/> : <Text style={styles.buttonText}>FILE COMPLAINT</Text>}
-                        </Pressable>
+                            title='FILE COMPLAINT'
+                            />
+                        </View>
                     </View>
             </Modal>
     );
@@ -86,18 +91,8 @@ const styles = StyleSheet.create({
         maxHeight: 600,
         overflow: 'scroll'
     },
-    button: {
-        backgroundColor: '#222',
-        paddingVertical: 20,
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop: 10,
-        width: dimensions.WIDTH - 20,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 15,
+    buttonContainer: {
+        paddingTop: 20
     },
     errorMessage: {
         color: 'red',

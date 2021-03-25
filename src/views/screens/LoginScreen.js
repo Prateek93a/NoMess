@@ -39,6 +39,8 @@ export default function LoginScreen() {
 
         setLoading(true);
 
+        console.log(password)
+
         try{
             const res = await fetch(LOGIN_URL, {
                 method: 'POST',
@@ -48,8 +50,11 @@ export default function LoginScreen() {
                 }
             });
 
+            console.log(res.status);
+
             if(res.status >= 200 && res.status < 300){
                 const res_json = await res.json();
+                console.log(res_json);
             
                 const user_raw = await fetch(USER, {
                     method: 'GET',
@@ -70,11 +75,11 @@ export default function LoginScreen() {
                 setLoading(false);
                 setAuthData(data);
             }
-            else if(res.status == 401){
+            else if(res.status >= 400 && res.status < 500){
                 setAuthError('Invalid credentials. Please try another combination.');
                 setLoading(false);  
                 return;
-            }else if(res.status == 500){
+            }else{
                 setAuthError('Some error occured, please retry.');
                 setLoading(false);
                 return;

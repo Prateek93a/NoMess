@@ -8,17 +8,20 @@ import {profileStudentImage, profileCatererImage, avatarImage} from '../../const
 import categories from '../../constants/categories';
 import PageTitle from '../components/PageTitle';
 import MainButton from '../components/MainButton';
+import ModeSwitch from '../components/ModeSwitch';
 
 export default function ProfileScreen({navigation}) {
     const [loading, setLoading] = useState(false);
     const {setAuthData, authData} = useContext(AuthContext);
     const {name, email, typeAccount, specialRole} = authData;
+    const [mode, setMode] = useState(0);
 
     const profileImage = typeAccount === categories[1] ? profileCatererImage : profileStudentImage;
 
     const handleLogout = async() => {
         setLoading(true);
         await fetch(LOGOUT_URL, {
+            method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + authData.key,
             }
@@ -86,7 +89,12 @@ export default function ProfileScreen({navigation}) {
                 {typeAccount != categories[1] && (
                     <View style={styles.contactContainer}>
                         <Text style={styles.labelText}>Billing Mode</Text>
-
+                        <ModeSwitch
+                        firstText='Coupon'
+                        secondText='Monthly'
+                        currentActive={mode}
+                        setActive={setMode}
+                        />
                     </View>
                 )}
             </View>
@@ -113,11 +121,11 @@ const styles = StyleSheet.create({
         paddingVertical: 10
     },
     body: {
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         flex: 1
     },
     imgContainer: {
-        paddingTop: 40,
+        paddingTop: 30,
         alignItems: 'center'
     },
     imgBackground: {
@@ -178,8 +186,7 @@ const styles = StyleSheet.create({
         color: '#aaa'
     },
     contactContainer: {
-        paddingTop: 50,
-        paddingLeft: 15
+        paddingTop: 30,
     },  
     contact: {
         flexDirection: 'row',

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { useQuery } from 'react-query';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/Card';
 import CardDetailsModal from '../components/CardDetailsModal';
@@ -16,8 +17,14 @@ const complaints = [{id: 0, name: 'Sam Wilson', date: 'July 2021',
                      title: 'Bad Oil', body: 'Reusing same oil over and over again.', 
                      status: '', active: true}];
 
+//const fetchComplaints = async() => {
+//    const res = await fetch('Complain url');
+//    return res.json();
+//}
 
 export default function ComplainScreen({navigation}) {
+    //const { data, status } = useQuery('complaints', fetchComplaints);
+
     const complaintDetailsStruct = {id: 0,
                                     name: '',
                                     date: '',

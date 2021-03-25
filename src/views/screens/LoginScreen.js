@@ -48,7 +48,29 @@ export default function LoginScreen() {
                 }
             });
 
-            if(res.status == 401){
+            if(res.status >= 200 && res.status < 300){
+                const res_json = await res.json();
+            
+                const user_raw = await fetch(USER, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Token ' + res_json.key,
+                    }
+                });
+    
+                const user = await user_raw.json();
+                const data = {
+                    key: res_json.key,
+                    name: user.name,
+                    email: user.email,
+                    typeAccount: user.typeAccount,
+                    specialRole: user.specialRole
+                };
+                await AsyncStorage.setItem('auth-data', JSON.stringify(data));
+                setLoading(false);
+                setAuthData(data);
+            }
+            else if(res.status == 401){
                 setAuthError('Invalid credentials. Please try another combination.');
                 setLoading(false);  
                 return;
@@ -57,27 +79,6 @@ export default function LoginScreen() {
                 setLoading(false);
                 return;
             }
-
-            const res_json = await res.json();
-            
-            const user_raw = await fetch(USER, {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Token ' + res_json.key,
-                }
-            });
-
-            const user = await user_raw.json();
-            const data = {
-                key: res_json.key,
-                name: user.name,
-                email: user.email,
-                typeAccount: user.typeAccount,
-                specialRole: user.specialRole
-            };
-            await AsyncStorage.setItem('auth-data', JSON.stringify(data));
-            setLoading(false);
-            setAuthData(data);
 
         }catch(error){
             console.log(error.message);

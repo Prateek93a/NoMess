@@ -18,6 +18,7 @@ export default function RegisterScreen({ route, navigation }) {
     const [passwordError, setPasswordError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [nameError, setNameError] = useState('');
+    const [authError, setAuthError] = useState('');
     const stateUpdateFuntions = [setName, setEmail, setPassword, setConfirmPassword];
 
     const handleInputChange = (index, text) => {
@@ -73,18 +74,26 @@ export default function RegisterScreen({ route, navigation }) {
                     'Content-Type': 'application/json'
                 }
             });
-            const res_json = await res.json();
-            const data = {
-                key: res_json.key,
-                name: name,
-                email: email,
-                typeAccount: route.params.category,
-                specialRole: "string",
-            };
-            await AsyncStorage.setItem('auth-data', JSON.stringify(data));
-            setLoading(false);
-            setAuthData(data);
+            if(res.status >= 200 && res.status < 300){
+                const res_json = await res.json();
+                const data = {
+                    key: res_json.key,
+                    name: name,
+                    email: email,
+                    typeAccount: route.params.category,
+                    specialRole: "string",
+                };
+                await AsyncStorage.setItem('auth-data', JSON.stringify(data));
+                setLoading(false);
+                setAuthData(data);
+            }else{
+                setAuthError('Some internal error occured, please retry.');
+                setLoading(false);
+                return;
+            }
+       
         }catch(error){
+            setAuthError('Some internal error occured, please retry.');
             console.log(error.message);
             setLoading(false);
         } 
@@ -143,12 +152,7 @@ export default function RegisterScreen({ route, navigation }) {
                     onPress={handleRegisterClick}
                     title='REGISTER'
                 />
-                {/*<Pressable
-                 onPress={}
-                 disabled={loading}
-                 style={({pressed}) => [{opacity: pressed ? 0.8 : 1}, styles.button]}>
-                    {loading ? <ActivityIndicator color='white'/> : <Text style={styles.buttonText}>REGISTER</Text>}
-                </Pressable>*/}
+                <Text style={styles.errorMessage}>{authError}</Text>
             </View>
             <View style={styles.logintextview}>
                 <Text style={{ color: '#555' }}>Already have an account? </Text>
@@ -182,19 +186,6 @@ const styles = StyleSheet.create({
         color: 'orange',
         fontWeight: 'bold'
     },
-    //button: {
-    //    backgroundColor: '#222',
-    //    paddingVertical: 20,
-    //    alignItems: 'center',
-    //    borderRadius: 10,
-    //    marginTop: 10,
-    //    width: dimensions.WIDTH-20,
-    //},
-    //buttonText: {
-    //    color: 'white',
-    //    fontWeight: 'bold',
-    //    fontSize: 15,
-    //},
     errorMessage: {
         color: 'red',
         fontSize: 10

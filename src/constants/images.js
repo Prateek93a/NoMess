@@ -19,3 +19,4 @@ export const food2Image = require('../assets/food2.jpg');
 export const profileStudentImage = require('../assets/profile-student.png');
 export const profileCatererImage = require('../assets/profile-caterer.png');
 export const avatarImage = require('../assets/avatar.jpg');
+export const qrImage = require('../assets/qr-code.png');

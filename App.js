@@ -24,6 +24,7 @@ import CouponHistoryScreen from './src/views/screens/CouponHistoryScreen';
 import BillHistoryScreen from './src/views/screens/BillHistoryScreen';
 import {AuthContext} from './src/context/authContext';
 import LeaveApplicationsScreen from './src/views/screens/LeaveApplicationsScreen';
+import QRReaderScreen from './src/views/screens/QRReaderScreen';
 
 LogBox.ignoreLogs(['Setting a timer for a long period of time']);
 //LogBox.ignoreLogs(['Syntax Error'])
@@ -86,6 +87,7 @@ export default function App() {
           <AuthStack.Screen name="complain" component={ComplainScreen} />
           <AuthStack.Screen name="bill" component={BillScreen} />
           <AuthStack.Screen name="profile" component={ProfileScreen} />
+          <AuthStack.Screen name="qr-reader" component={QRReaderScreen} />
           <AuthStack.Screen
             name="complaint-list"
             component={ComplaintApplicationsScreen}

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView, Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';

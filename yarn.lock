@@ -2946,6 +2946,11 @@ expect@^25.5.0:
     jest-message-util "^25.5.0"
     jest-regex-util "^25.2.6"
 
+expo-linear-gradient@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-9.0.0.tgz#7abb571e72b34a0d09241b6a7338c2c0c7dc3b26"
+  integrity sha512-d01mSCgGth6Q32/UnXbsXvTBe0rtYdEiVEAJLFUeS7TjUmS6GvZzw4UyglcSG02HpU+/uDjwjIKFm5j6DrMH/w==
+
 extend-shallow@^1.1.2:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/extend-shallow/-/extend-shallow-1.1.4.tgz#19d6bf94dfc09d76ba711f39b872d21ff4dd9071"
@@ -5858,6 +5863,11 @@ range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
+
+react-content-loader@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-6.0.2.tgz#7c72e5b133136c31c2f27036d1d7b39dab804026"
+  integrity sha512-eQrWT2KV1uPhFh9ErRhOLl4SBkzK9oxQiuEq6Dgq4D9oqKg9j/Ib8+aFoknvn1hYVx5fqSAI5BjxY9ukTOVPXw==
 
 react-devtools-core@^4.6.0:
   version "4.10.1"

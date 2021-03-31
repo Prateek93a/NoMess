@@ -8,6 +8,7 @@ export const guestImage = require('../assets/guest2.png');
 export const chefImage = require('../assets/chef2.png');
 export const studentImage = require('../assets/student2.png');
 export const emptyImage = require('../assets/empty.png');
+export const errorImage = require('../assets/error.png');
 export const complainImage = require('../assets/bad-review.png');
 export const leaveImage = require('../assets/medical-report.png');
 export const couponImage = require('../assets/hamburger.png');

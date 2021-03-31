@@ -1,5 +1,7 @@
-const BASE_URL = 'http://ec2-3-23-96-26.us-east-2.compute.amazonaws.com:8000/api/v1/auth';
-const API_URL = "http://ec2-3-23-96-26.us-east-2.compute.amazonaws.com:8000/api/v1";
+const BASE_URL =
+  'http://ec2-3-23-96-26.us-east-2.compute.amazonaws.com:8000/api/v1/auth';
+const API_URL =
+  'http://ec2-3-23-96-26.us-east-2.compute.amazonaws.com:8000/api/v1';
 
 export const LOGIN_URL = BASE_URL + '/login/';
 export const LOGOUT_URL = BASE_URL + '/logout/';
@@ -11,3 +13,7 @@ export const REGISTER_VERIFY_EMAIL = BASE_URL + '/register/verify-email/';
 export const USER = BASE_URL + '/user/';
 export const REQUEST_COUPON = API_URL + '/coupon/buy/request/';
 export const CONFIRM_COUPON_PAYMENT = API_URL + '/coupon/buy/confirm/';
+export const COMPLAINT_FETCH = API_URL + '/complaint/';
+export const COMPLAINT_POST = API_URL + '/complaint/';
+export const COMPLAINT_RESOLVE = API_URL + '/complaint/resolve/';
+export const COUPON_LIST = API_URL + '/coupon/';

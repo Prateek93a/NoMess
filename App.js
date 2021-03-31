@@ -1,7 +1,8 @@
 import 'react-native-gesture-handler';
 import React, {useContext, useState, useEffect} from 'react';
 import {enableScreens} from 'react-native-screens';
-import { StatusBar} from 'react-native';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { StatusBar, LogBox } from 'react-native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // todo: move data to a secure storage
@@ -21,7 +22,11 @@ import ComplaintApplicationsScreen from './src/views/screens/ComplaintApplicatio
 import {AuthContext} from './src/context/authContext';
 import LeaveApplicationsScreen from './src/views/screens/LeaveApplicationsScreen';
 
+LogBox.ignoreLogs(['Setting a timer for a long period of time']);
+//LogBox.ignoreLogs(['Syntax Error'])
+
 enableScreens();
+const queryClient = new QueryClient();
 
 const OnboardingStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -61,6 +66,7 @@ export default function App() {
   }
 
   return (
+    <QueryClientProvider client={queryClient}>
     <NavigationContainer>
       <StatusBar backgroundColor='white' barStyle='dark-content' />
       <AuthStack.Navigator initialRouteName='dashboard' screenOptions={{ headerShown: false }}>
@@ -74,5 +80,6 @@ export default function App() {
         <AuthStack.Screen name='leave-list' component={LeaveApplicationsScreen} />
       </AuthStack.Navigator>
     </NavigationContainer>
+    </QueryClientProvider>
   );
 };

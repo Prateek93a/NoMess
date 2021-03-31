@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import {avatarImage} from '../../constants/images';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export default function Card({name='John Doe', title, active, status, date, id, onPress}) {
+export default function Card({name='John Doe', title, active, date, id, onPress}) {
+    const status = active ? 'Pending' : 'Resolved';
     return (
         <Pressable
         onPress={onPress}

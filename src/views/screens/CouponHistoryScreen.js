@@ -1,23 +1,16 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import PageTitle from '../components/PageTitle';
 
-const ListItem = ({title, onPress}) => (
-  <TouchableOpacity onPress={onPress}>
-    <View style={styles.listItemContainer}>
-      <Text style={styles.listItemTitle}>{title}</Text>
-      <Icon
-        name="chevron-right"
-        size={15}
-        backgroundColor="white"
-        color="black"
-      />
-    </View>
-  </TouchableOpacity>
+const ListItem = ({titleLeft, titleRight}) => (
+  <View style={styles.listItemContainer}>
+    <Text style={styles.listItemTitle}>{titleLeft}</Text>
+    <Text style={styles.listItemTitle}>{titleRight + ''}</Text>
+  </View>
 );
 
-export default function BillScreen({navigation}) {
+export default function CouponHistoryScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,14 +26,10 @@ export default function BillScreen({navigation}) {
         <PageTitle text="Your Bills" showRefresh={false} />
       </View>
       <View style={styles.body}>
-        <ListItem
-          title="Coupon History"
-          onPress={() => navigation.navigate('coupon-history')}
-        />
-        <ListItem
-          title="Bill History"
-          onPress={() => navigation.navigate('bill-history')}
-        />
+        <ListItem titleLeft="Total Coupons Purchased" titleRight="100" />
+        <ListItem titleLeft="Total Coupons Used" titleRight="100" />
+        <ListItem titleLeft="Total Coupons Unused" titleRight="100" />
+        <ListItem titleLeft="Total Amount Spent" titleRight="100" />
       </View>
     </View>
   );

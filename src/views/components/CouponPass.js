@@ -15,25 +15,27 @@ export default function CouponPass({
       android_ripple
       onPress={onPress}
       style={({pressed}) => [
-        styles.button,
+        // styles.button,
+        styles.container,
         !pressed && styles.shadow,
         pressed && {opacity: 0.5},
       ]}>
       <LinearGradient
         colors={['#4c669f', '#3b5998', '#192f6a']}
-        style={styles.container}>
+        style={{padding: 10, borderRadius: 5}}
+        >
         <View style={styles.head}>
-          <Text>{buyer}</Text>
-          <Text>{timestamp}</Text>
+          <Text style={styles.text}>{buyer}</Text>
+          <Text style={styles.text}>{new Date(timestamp).toString().substring(0, 10)}</Text>
         </View>
         <View style={styles.middle}>
-          <Text style={styles.text}>
-            {isCoupon ? 'Coupon' : 'Food Pass'}Coupon
+          <Text style={styles.title}>
+            {isCoupon ? 'Coupon' : 'Food Pass'}
           </Text>
         </View>
         <View style={styles.foot}>
-          <View style={styles.status}>
-            <Text>{is_spent ? 'Spent' : 'Available'}</Text>
+          <View style={[styles.status, is_spent && styles.is_spent]}>
+            <Text style={styles.statusText}>{is_spent ? 'Spent' : 'Available'}</Text>
           </View>
         </View>
       </LinearGradient>
@@ -50,8 +52,9 @@ const styles = StyleSheet.create({
     width: dimensions.WIDTH - 20,
   },
   container: {
-    padding: 15,
-    flex: 1,
+    // padding: 15,
+    // flex: 1,
+    marginBottom: 10,
     borderRadius: 5,
   },
   head: {
@@ -73,7 +76,11 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     backgroundColor: 'green',
+    borderRadius: 3
   },
+  statusText: {
+    color: 'white'
+  },  
   text: {
     backgroundColor: 'transparent',
     fontSize: 15,
@@ -97,4 +104,7 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
+  is_spent: {
+    backgroundColor: 'red'
+  }
 });

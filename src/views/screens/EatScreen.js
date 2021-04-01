@@ -193,8 +193,9 @@ export default function EatScreen({navigation}) {
         {status == 'error' && <Error />}
         {status == 'success' &&
           (coupons.length ? (
-            coupons.map((coupon) => (
+            coupons.map((coupon, index) => (
               <CouponPass
+                key={index}
                 timestamp={coupon.timestamp}
                 is_spent={coupon.is_spent}
                 buyer={coupon.buyer}

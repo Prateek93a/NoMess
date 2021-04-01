@@ -3,12 +3,12 @@ import React, {useState, useEffect, useContext} from 'react';
 import {Text, View, StyleSheet, Button, Alert} from 'react-native';
 import {BarCodeScanner} from 'expo-barcode-scanner';
 import {AuthContext} from '../../context/authContext';
+import {COUPON_VERIFY} from '../../constants/urls';
 
 const checkCode = async (data, key) => {
   try {
-    const res = await fetch('url', {
-      method: 'POST',
-      body: data,
+    const res = await fetch(COUPON_VERIFY + data, {
+      method: 'GET',
       headers: {
         Authorization: 'Token ' + key,
       },

@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useQuery, QueryCache} from 'react-query';
+import {useQuery, useQueryClient} from 'react-query';
 import Card from '../components/Card';
 import CardDetailsModal from '../components/CardDetailsModal';
 import {AuthContext} from '../../context/authContext';
@@ -51,6 +51,7 @@ const resolveComplaint = async (key, id) => {
 };
 
 export default function ComplaintApplicationsScreen({navigation}) {
+  const queryClient = useQueryClient();
   const {authData} = useContext(AuthContext);
   const {data: complaints, status} = useQuery('complaints', () =>
     fetchComplaints(authData.key),
@@ -82,7 +83,7 @@ export default function ComplaintApplicationsScreen({navigation}) {
   const handleComplaintResolve = async (id) => {
     try {
       await resolveComplaint(authData.key, id); // use the useMutation hook
-      QueryCache.invalidateCache('complaints');
+      queryClient.invalidateQueries('complaints');
     } catch (e) {
       console.log(e);
     }

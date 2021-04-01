@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {useQuery, QueryCache} from 'react-query';
+import {useQuery, useQueryClient} from 'react-query';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {AuthContext} from '../../context/authContext';
 import Card from '../components/Card';
@@ -41,6 +41,7 @@ const postComplaint = async (key, body) => {
 };
 
 export default function ComplainScreen({navigation}) {
+  const queryClient = useQueryClient();
   const {authData} = useContext(AuthContext);
   const {data: complaints, status} = useQuery('complaints', () =>
     fetchComplaints(authData.key),
@@ -77,7 +78,7 @@ export default function ComplainScreen({navigation}) {
   const handleComplaintSubmit = async (title, body) => {
     try {
       await postComplaint(authData.key, JSON.stringify({title, body}));
-      QueryCache.invalidateQueries('complaints');
+      queryClient.invalidateQueries('complaints');
     } catch (e) {
       console.log(e);
     }

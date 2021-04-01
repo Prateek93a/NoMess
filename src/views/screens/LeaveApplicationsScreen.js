@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useQuery, QueryCache} from 'react-query';
+import {useQuery, useQueryClient} from 'react-query';
 import Card from '../components/Card';
 import CardDetailsModal from '../components/CardDetailsModal';
 import {AuthContext} from '../../context/authContext';
@@ -51,6 +51,7 @@ const approveLeave = async (key, id) => {
 };
 
 export default function LeaveApplicationsScreen({navigation}) {
+  const queryClient = useQueryClient();
   const {authData} = useContext(AuthContext);
   const {data: leaves, status} = useQuery('leaves', () =>
     fetchLeaves(authData.key),
@@ -77,7 +78,7 @@ export default function LeaveApplicationsScreen({navigation}) {
   const handleLeaveApprove = async (id) => {
     try {
       await approveLeave(authData.key, id); // use the useMutation hook
-      QueryCache.invalidateCache('leaves');
+      queryClient.invalidateQueries('leaves');
     } catch (e) {
       console.log(e);
     }

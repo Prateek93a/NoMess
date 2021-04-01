@@ -13,7 +13,7 @@ export default function CardDetailsModal({
   handlePress = null,
   isComplain = true,
 }) {
-  const {name, date, id, title, body, status, active} = details;
+  const {name, applied_date:date, id, title, body, is_approved:active} = details;
   return (
     <Modal
       onBackdropPress={() => toggleModal(false)}
@@ -40,7 +40,7 @@ export default function CardDetailsModal({
                   size={20}
                   style={[styles.subText, {marginRight: 5}]}
                 />
-                <Text style={styles.subText}>{date}</Text>
+                <Text style={styles.subText}>{new Date(date).toString().substring(0, 10)}</Text>
               </View>
             </View>
           </View>
@@ -48,7 +48,7 @@ export default function CardDetailsModal({
             <Text style={styles.subText}>#{id}</Text>
             <View style={[styles.statusContainer, active && styles.active]}>
               <Text style={styles.statusText}>
-                {active ? 'Pending' : status}
+                {active ? 'Pending' : 'Approved'}
               </Text>
             </View>
           </View>

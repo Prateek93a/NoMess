@@ -36,7 +36,7 @@ export default function Card({name='John Doe', title, active, date, id, onPress}
                             style={[styles.subText, {marginRight: 5}]}
                         />
                         <Text style={styles.subText}>
-                            {date}
+                            {new Date(date).toString().substring(0,10)}
                         </Text>
                     </View>
                     <View style={[styles.statusContainer, active && styles.active]}>

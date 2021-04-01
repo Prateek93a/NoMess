@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useQuery, QueryCache} from 'react-query';
+import {useQuery, useQueryClient} from 'react-query';
 import Card from '../components/Card';
 import CardDetailsModal from '../components/CardDetailsModal';
 import PageTitle from '../components/PageTitle';
@@ -53,6 +53,7 @@ const postLeave = async (key, body) => {
 };
 
 export default function LeaveScreen({navigation}) {
+  const queryClient = useQueryClient();
   const {authData} = useContext(AuthContext);
   const {data: leaves, status} = useQuery('leaves', () =>
     fetchLeaves(authData.key),
@@ -86,6 +87,7 @@ export default function LeaveScreen({navigation}) {
 
   const handleLeaveSubmit = async (reasonText, startDate, endDate) => {
     // make requests
+    queryClient.invalidateQueries('leaves');
   };
 
   const refresh = async () => {
@@ -133,11 +135,10 @@ export default function LeaveScreen({navigation}) {
               <Card
                 name={leave.name}
                 key={leave.id}
-                title={leave.title}
-                date={leave.date}
+                title={'Leave Application'}
+                date={leave.applied_date}
                 id={leave.id}
-                active={leave.active}
-                status={leave.status}
+                active={leave.is_approved}
                 onPress={() => toggleLeaveModal(true, leave)}
               />
             ))

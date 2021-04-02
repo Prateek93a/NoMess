@@ -121,6 +121,7 @@ export default function EatScreen({navigation}) {
             console.log(res_json);
             if (res_json.success == 1) {
               alert('Success: Payment completed succesfully!'); //TODO: Do some UI magic
+              queryClient.invalidateQueries('coupons');
               //TODO: Refresh coupons here
             } else if (res_json.success == 0) {
               alert('Failure: Payment did not completed succesfully!'); //TODO: Do some UI magic
@@ -158,6 +159,7 @@ export default function EatScreen({navigation}) {
 
   const refresh = async () => {
     //setRefreshing(true);
+    queryClient.invalidateQueries('coupons');
   };
 
   return (
@@ -199,7 +201,7 @@ export default function EatScreen({navigation}) {
                 key={index}
                 timestamp={coupon.timestamp}
                 is_spent={coupon.is_spent}
-                buyer={coupon.buyer}
+                buyer={coupon.buyer_name}
                 onPress={() => setQR(coupon.uuid)}
                 isCoupon={true}
               />

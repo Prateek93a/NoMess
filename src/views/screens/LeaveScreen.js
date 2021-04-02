@@ -144,12 +144,12 @@ export default function LeaveScreen({navigation}) {
           (leaves.length ? (
             leaves.map((leave) => (
               <Card
-                name={leave.name}
+                name={leave.user_name}
                 key={leave.id}
                 title={'Leave Application'}
                 date={leave.applied_date}
                 id={leave.id}
-                active={leave.is_approved}
+                active={!leave.is_approved}
                 onPress={() => toggleLeaveModal(true, leave)}
               />
             ))

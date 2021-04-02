@@ -132,9 +132,9 @@ export default function ComplainScreen({navigation}) {
                 isComplaint={true}
                 key={complaint.id}
                 title={complaint.title}
-                date={'complaint.date'}
+                date={complaint.applied_date}
                 id={complaint.id}
-                active={complaint.resolved}
+                active={!complaint.resolved}
                 onPress={() => toggleComplaintsModal(true, complaint)}
               />
             ))

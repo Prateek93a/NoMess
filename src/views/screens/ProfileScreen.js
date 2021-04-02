@@ -71,7 +71,11 @@ export default function ProfileScreen({navigation}) {
             </Text>
           </View>
           <View style={[styles.ticket, {backgroundColor: 'purple'}]}>
-            <Text style={styles.ticketText}>{'No Special Role'}</Text>
+            <Text style={styles.ticketText}>
+              {specialRole
+                ? specialRole
+                : 'No Special Role'}
+            </Text>
           </View>
         </View>
         <View style={styles.contactContainer}>

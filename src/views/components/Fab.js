@@ -35,7 +35,7 @@ export const catererFabItems = [
   {
     type: qrImage,
     titleTop: 'Verify',
-    titleBottom: 'Coupon/Pass',
+    titleBottom: 'Coupon|Pass',
     screen: 'qr-reader',
   },
   {
@@ -54,9 +54,14 @@ export const catererFabItems = [
     type: billImage,
     titleTop: 'Handle',
     titleBottom: 'Transactions',
-    screen: 'bill',
+    screen: 'caterer-bill',
   },
-  {type: postImage, titleTop: 'Post', titleBottom: 'Updates', screen: 'bill'},
+  {
+    type: postImage,
+    titleTop: 'Post',
+    titleBottom: 'Updates',
+    screen: 'caterer-bill',
+  },
 ];
 
 export function Fab({item, onPress}) {

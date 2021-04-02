@@ -54,7 +54,7 @@ export default function ProfileScreen({navigation}) {
       <View style={styles.body}>
         <View style={styles.imgContainer}>
           <View style={styles.imgBackground}>
-            <Image source={avatarImage} style={styles.img} />
+            <Image source={profileImage} style={styles.img} />
           </View>
         </View>
         <View style={styles.heading}>
@@ -72,9 +72,7 @@ export default function ProfileScreen({navigation}) {
           </View>
           <View style={[styles.ticket, {backgroundColor: 'purple'}]}>
             <Text style={styles.ticketText}>
-              {specialRole
-                ? specialRole
-                : 'No Special Role'}
+              {specialRole ? specialRole : 'No Special Role'}
             </Text>
           </View>
         </View>

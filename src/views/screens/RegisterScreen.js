@@ -68,7 +68,6 @@ export default function RegisterScreen({ route, navigation }) {
                                      password2: confirmPassword.trim(),
                                      name: name.trim(),
                                      typeAccount: route.params.category,
-                                     specialRole: "string",
                                     }),
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,7 +80,6 @@ export default function RegisterScreen({ route, navigation }) {
                     name: name,
                     email: email,
                     typeAccount: route.params.category,
-                    specialRole: "string",
                 };
                 await AsyncStorage.setItem('auth-data', JSON.stringify(data));
                 setLoading(false);

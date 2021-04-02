@@ -173,7 +173,7 @@ const ListItem = ({billDetails, toggleModal}) => (
   <TouchableOpacity onPress={() => toggleModal(true, billDetails)}>
     <View style={styles.listItemContainer}>
       <Text style={styles.listItemTitle}>
-        {monthNames[billDetails.month] + ' ' + billDetails.year}
+        {monthNames[billDetails.month - 1] + ' ' + billDetails.year}
       </Text>
       {!billDetails.is_paid && (
         <Icon
@@ -195,7 +195,7 @@ const ListItemModal = ({
   refresh,
 }) => {
   const {
-    buyer,
+    buyer_name: buyer,
     is_paid: billStatus,
     bill_from: billDate,
     bill_days,

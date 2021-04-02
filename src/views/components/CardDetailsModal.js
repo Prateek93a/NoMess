@@ -14,7 +14,7 @@ export default function CardDetailsModal({
   isComplaint = false,
 }) {
   const {
-    name,
+    user_name: name,
     applied_date: date,
     id,
     title,

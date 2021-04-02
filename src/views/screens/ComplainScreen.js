@@ -87,7 +87,7 @@ export default function ComplainScreen({navigation}) {
   };
 
   const refresh = async () => {
-    //setRefreshing(true);
+    queryClient.invalidateQueries('complaints');
   };
 
   return (
@@ -128,7 +128,7 @@ export default function ComplainScreen({navigation}) {
           (complaints.length ? (
             complaints.map((complaint) => (
               <Card
-                //name={}
+                name={complaint.user_name}
                 isComplaint={true}
                 key={complaint.id}
                 title={complaint.title}

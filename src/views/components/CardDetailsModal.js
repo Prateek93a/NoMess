@@ -13,14 +13,14 @@ export default function CardDetailsModal({
   handlePress = null,
   isComplaint = false,
 }) {
-  const {
-    user_name: name,
-    applied_date: date,
-    id,
-    title,
-    body,
-    is_approved: active,
-  } = details;
+  let active = false;
+  const {user_name: name, applied_date: date, id, title, body} = details;
+  if (isComplaint) {
+    active = !details.resolved;
+  } else {
+    active = !details.is_approved;
+  }
+
   return (
     <Modal
       onBackdropPress={() => toggleModal(false)}

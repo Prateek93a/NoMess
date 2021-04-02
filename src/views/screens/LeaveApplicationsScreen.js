@@ -85,7 +85,7 @@ export default function LeaveApplicationsScreen({navigation}) {
   };
 
   const refresh = async () => {
-    //setRefreshing(true);
+    queryClient.invalidateQueries('leaves');
   };
 
   return (
@@ -121,13 +121,12 @@ export default function LeaveApplicationsScreen({navigation}) {
           (leaves.length ? (
             leaves.map((leave) => (
               <Card
-                name={leave.name}
+                name={leave.user_name}
                 key={leave.id}
-                title={leave.title}
-                date={leave.date}
+                title={'Leave Request'}
+                date={leave.applied_date}
                 id={leave.id}
-                active={leave.active}
-                status={leave.status}
+                active={!leave.is_approved}
                 onPress={() => toggleModal(true, leave)}
               />
             ))

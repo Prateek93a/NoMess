@@ -90,7 +90,7 @@ export default function ComplaintApplicationsScreen({navigation}) {
   };
 
   const refresh = async () => {
-    //setRefreshing(true);
+    queryClient.invalidateQueries('complaints');
   };
 
   return (
@@ -121,14 +121,13 @@ export default function ComplaintApplicationsScreen({navigation}) {
         {status == 'success' && complaints.length ? (
           complaints.map((complaint) => (
             <Card
+              name={complaint.user_name}
               isComplaint={true}
-              name={complaint.name}
               key={complaint.id}
               title={complaint.title}
-              date={complaint.date}
+              date={complaint.applied_date}
               id={complaint.id}
-              active={complaint.active}
-              status={complaint.status}
+              active={!complaint.resolved}
               onPress={() => toggleModal(true, complaint)}
             />
           ))

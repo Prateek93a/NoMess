@@ -1,1 +1,1 @@
-export default categories = ['STUDENT', 'CATERER', 'GUEST'];
+export default ['STUDENT', 'CATERER', 'GUEST'];

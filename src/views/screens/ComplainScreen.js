@@ -37,6 +37,7 @@ const postComplaint = async (key, body) => {
     body: body,
     headers: {
       Authorization: 'Token ' + key,
+      'Content-Type': 'application/json',
     },
   });
 };

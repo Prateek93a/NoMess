@@ -48,6 +48,7 @@ const postLeave = async (key, body) => {
     body: body,
     headers: {
       Authorization: 'Token ' + key,
+      'Content-Type': 'application/json',
     },
   });
 };

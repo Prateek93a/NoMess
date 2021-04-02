@@ -38,7 +38,6 @@ export const catererFabItems = [
     titleBottom: 'Coupon/Pass',
     screen: 'qr-reader',
   },
-  {type: postImage, titleTop: 'Post', titleBottom: 'Updates', screen: 'bill'},
   {
     type: complainImage,
     titleTop: 'Review',
@@ -57,6 +56,7 @@ export const catererFabItems = [
     titleBottom: 'Transactions',
     screen: 'bill',
   },
+  {type: postImage, titleTop: 'Post', titleBottom: 'Updates', screen: 'bill'},
 ];
 
 export function Fab({item, onPress}) {

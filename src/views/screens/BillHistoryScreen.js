@@ -1,8 +1,38 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import PageTitle from '../components/PageTitle';
+import {useQuery, useQueryClient} from 'react-query';
+import Preloader from '../components/Preloader';
+import EmptyList from '../components/EmptyList';
+import Error from '../components/Error';
+import {AuthContext} from '../../context/authContext';
+import {BILL_FETCH, BILL_POST} from '../../constants/urls';
+
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+const fetchBills = async (key) => {
+  const res = await fetch(BILL_FETCH, {
+    headers: {
+      Authorization: 'Token ' + key,
+    },
+  });
+  return res.json();
+};
 
 const items = [
   {
@@ -36,11 +66,13 @@ const ListHeader = ({text}) => {
   );
 };
 
-const ListItem = ({billDetails, toggleModal, isPending = false}) => (
+const ListItem = ({billDetails, toggleModal}) => (
   <TouchableOpacity onPress={() => toggleModal(true, billDetails)}>
     <View style={styles.listItemContainer}>
-      <Text style={styles.listItemTitle}>{billDetails.title}</Text>
-      {isPending && (
+      <Text style={styles.listItemTitle}>
+        {monthNames[billDetails.month] + ' ' + billDetails.year}
+      </Text>
+      {!billDetails.is_paid && (
         <Icon
           name="chevron-right"
           size={15}
@@ -59,7 +91,7 @@ const ListItemModal = ({billDetails, toggleModal, isModalVisible}) => {
     bill_from: billDate,
     bill_days,
     bill_amount: billAmount,
-    billId,
+    id: billId,
   } = billDetails;
   return (
     <Modal
@@ -93,7 +125,7 @@ const ListItemModal = ({billDetails, toggleModal, isModalVisible}) => {
             <Text
               style={
                 styles.billDetailsText
-              }>{`${billDate} (${bill_days})`}</Text>
+              }>{`${billDate} (${bill_days} Days)`}</Text>
           </View>
           <View style={styles.billDetails}>
             <Icon name="rupee-sign" size={20} />
@@ -106,6 +138,12 @@ const ListItemModal = ({billDetails, toggleModal, isModalVisible}) => {
 };
 
 export default function BillScreen({navigation}) {
+  const queryClient = useQueryClient();
+  const {authData} = useContext(AuthContext);
+  const {data: bills, status} = useQuery('bills', () =>
+    fetchBills(authData.key),
+  );
+
   const billDetailsStruct = {
     title: 'June 2021',
     billId: '',
@@ -150,18 +188,27 @@ export default function BillScreen({navigation}) {
           isModalVisible={isModalVisible}
           billDetails={billDetails}
         />
-        <ListHeader text="Pending Bills" />
-        <ListItem
-          toggleModal={toggleModal}
-          billDetails={billDetailsStruct}
-          isPending={true}
-        />
-        <ListHeader text="Bill History" />
-        <FlatList
-          data={items}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.billId}
-        />
+        {status == 'loading' && <Preloader />}
+        {status == 'error' && <Error />}
+        {status == 'success' &&
+          (bills.length ? (
+            <>
+              <ListHeader text="Pending Bills" />
+              <FlatList
+                data={bills.filter((bill) => !bill.is_paid)}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+              />
+              <ListHeader text="Bill History" />
+              <FlatList
+                data={bills.filter((bill) => bill.is_paid)}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+              />
+            </>
+          ) : (
+            <EmptyList text="No Bills Yet" />
+          ))}
       </View>
       <Text />
     </View>
@@ -185,7 +232,6 @@ const styles = StyleSheet.create({
   },
   body: {
     paddingTop: 40,
-    flex: 1,
   },
   listHeaderContainer: {
     flexDirection: 'row',

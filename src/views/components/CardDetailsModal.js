@@ -11,9 +11,16 @@ export default function CardDetailsModal({
   isModalVisible,
   isCaterer = false,
   handlePress = null,
-  isComplain = true,
+  isComplaint = false,
 }) {
-  const {name, applied_date:date, id, title, body, is_approved:active} = details;
+  const {
+    name,
+    applied_date: date,
+    id,
+    title,
+    body,
+    is_approved: active,
+  } = details;
   return (
     <Modal
       onBackdropPress={() => toggleModal(false)}
@@ -40,7 +47,9 @@ export default function CardDetailsModal({
                   size={20}
                   style={[styles.subText, {marginRight: 5}]}
                 />
-                <Text style={styles.subText}>{new Date(date).toString().substring(0, 10)}</Text>
+                <Text style={styles.subText}>
+                  {new Date(date).toString().substring(0, 10)}
+                </Text>
               </View>
             </View>
           </View>
@@ -48,7 +57,7 @@ export default function CardDetailsModal({
             <Text style={styles.subText}>#{id}</Text>
             <View style={[styles.statusContainer, active && styles.active]}>
               <Text style={styles.statusText}>
-                {active ? 'Pending' : 'Approved'}
+                {active ? 'Pending' : isComplaint ? 'Resolved' : 'Approved'}
               </Text>
             </View>
           </View>
@@ -63,7 +72,7 @@ export default function CardDetailsModal({
         </ScrollView>
         {isCaterer && (
           <View style={styles.buttonContainer}>
-            {isComplain ? (
+            {isComplaint ? (
               <Pressable
                 disabled={!active}
                 onPress={() => handlePress(id)}

@@ -21,3 +21,4 @@ export const LEAVE_POST = API_URL + '/leave/';
 export const LEAVE_APPROVE = API_URL + '/leave/approve/';
 export const COUPON_LIST = API_URL + '/coupon/';
 export const COUPON_VERIFY = API_URL + '/coupon/spend/';
+export const BILL_FETCH = API_URL + '/bill/';

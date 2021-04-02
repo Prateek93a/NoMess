@@ -31,6 +31,7 @@ const fetchComplaints = async (key) => {
 };
 
 const postComplaint = async (key, body) => {
+  console.log(body);
   await fetch(COMPLAINT_POST, {
     method: 'POST',
     body: body,
@@ -119,6 +120,7 @@ export default function ComplainScreen({navigation}) {
           toggleModal={toggleComplaintsModal}
           isModalVisible={isComplaintModalVisible}
           details={complaintDetails}
+          isComplaint={true}
         />
         {status == 'loading' && <Preloader />}
         {status == 'success' &&
@@ -126,6 +128,7 @@ export default function ComplainScreen({navigation}) {
             complaints.map((complaint) => (
               <Card
                 //name={}
+                isComplaint={true}
                 key={complaint.id}
                 title={complaint.title}
                 date={'complaint.date'}

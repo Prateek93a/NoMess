@@ -114,12 +114,14 @@ export default function ComplaintApplicationsScreen({navigation}) {
           details={complaintDetails}
           isCaterer={true}
           handlePress={handleComplaintResolve}
+          isComplaint={true}
         />
         {status == 'loading' && <Preloader />}
         {status == 'error' && <Error />}
         {status == 'success' && complaints.length ? (
           complaints.map((complaint) => (
             <Card
+              isComplaint={true}
               name={complaint.name}
               key={complaint.id}
               title={complaint.title}

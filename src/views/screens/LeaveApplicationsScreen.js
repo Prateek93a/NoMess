@@ -110,6 +110,7 @@ export default function LeaveApplicationsScreen({navigation}) {
         <CardDetailsModal
           toggleModal={toggleModal}
           isModalVisible={isModalVisible}
+          handlePress={handleLeaveApprove}
           details={leaveDetails}
           isCaterer={true}
           isComplain={false}

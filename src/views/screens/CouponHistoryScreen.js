@@ -1,7 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {useQuery, useQueryClient} from 'react-query';
 import PageTitle from '../components/PageTitle';
+import {AuthContext} from '../../context/authContext';
+import {COUPON_LIST} from '../../constants/urls';
+import Preloader from '../components/Preloader';
+import EmptyList from '../components/EmptyList';
+import Error from '../components/Error';
+
+const fetchCoupons = async (key) => {
+  const res = await fetch(COUPON_LIST, {
+    headers: {
+      Authorization: 'Token ' + key,
+    },
+  });
+  return res.json();
+};
 
 const ListItem = ({titleLeft, titleRight}) => (
   <View style={styles.listItemContainer}>
@@ -11,6 +26,11 @@ const ListItem = ({titleLeft, titleRight}) => (
 );
 
 export default function CouponHistoryScreen({navigation}) {
+  const queryClient = useQueryClient();
+  const {authData} = useContext(AuthContext);
+  const {data: coupons, status} = useQuery('coupons', () =>
+    fetchCoupons(authData.key),
+  );
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -23,13 +43,37 @@ export default function CouponHistoryScreen({navigation}) {
             color="black"
           />
         </View>
-        <PageTitle text="Your Bills" showRefresh={false} />
+        <PageTitle text="Your Coupon History" showRefresh={false} />
       </View>
       <View style={styles.body}>
-        <ListItem titleLeft="Total Coupons Purchased" titleRight="100" />
-        <ListItem titleLeft="Total Coupons Used" titleRight="100" />
-        <ListItem titleLeft="Total Coupons Unused" titleRight="100" />
-        <ListItem titleLeft="Total Amount Spent" titleRight="100" />
+        {status == 'loading' && <Preloader />}
+        {status == 'error' && <Error />}
+        {status == 'success' &&
+          (coupons.length ? (
+            <>
+              <ListItem
+                titleLeft="Total Coupons Purchased"
+                titleRight={coupons.length}
+              />
+              <ListItem
+                titleLeft="Total Coupons Used"
+                titleRight={coupons.filter((coupon) => coupon.is_spent).length}
+              />
+              <ListItem
+                titleLeft="Total Coupons Unused"
+                titleRight={
+                  coupons.length -
+                  coupons.filter((coupon) => coupon.is_spent).length
+                }
+              />
+              <ListItem
+                titleLeft="Total Amount Spent"
+                titleRight={'Rs ' + coupons.length * 126}
+              />
+            </>
+          ) : (
+            <EmptyList text="No Coupons Purchased" />
+          ))}
       </View>
     </View>
   );

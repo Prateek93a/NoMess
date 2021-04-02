@@ -3,7 +3,7 @@ import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView, Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {logoImage} from '../../constants/images';
-import {useQuery, QueryCache} from 'react-query';
+import {useQuery, useQueryClient} from 'react-query';
 import QRCode from './QRCode';
 import RazorpayCheckout from 'react-native-razorpay';
 import {REQUEST_COUPON, CONFIRM_COUPON_PAYMENT} from '../../constants/urls';
@@ -25,6 +25,7 @@ const fetchCoupons = async (key) => {
 };
 
 export default function EatScreen({navigation}) {
+  const queryClient = useQueryClient();
   const {authData} = useContext(AuthContext);
   const {data: coupons, status} = useQuery('coupons', () =>
     fetchCoupons(authData.key),
@@ -142,7 +143,7 @@ export default function EatScreen({navigation}) {
           alert(`Error: ${error.code} | ${error.description}`);
         }
       });
-    QueryCache.invalidateCache('coupons');
+    queryClient.invalidateQueries('coupons');
     toggleModal();
   };
 

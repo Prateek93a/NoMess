@@ -86,7 +86,17 @@ export default function LeaveScreen({navigation}) {
   };
 
   const handleLeaveSubmit = async (reasonText, startDate, endDate) => {
-    // make requests
+    const body = {
+      body: reasonText,
+      commencement_date: startDate.toISOString().substring(0, 10),
+      end_date: endDate.toISOString().substring(0, 10),
+    };
+    try {
+      await postLeave(authData.key, JSON.stringify(body));
+    } catch (e) {
+      console.log(e);
+    }
+
     queryClient.invalidateQueries('leaves');
   };
 
@@ -143,7 +153,7 @@ export default function LeaveScreen({navigation}) {
               />
             ))
           ) : (
-            <EmptyList text="No applications submitted" />
+            <EmptyList text="No Applications Submitted" />
           ))}
       </View>
     </ScrollView>

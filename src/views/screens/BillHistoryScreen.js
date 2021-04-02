@@ -1,14 +1,23 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {logoImage} from '../../constants/images';
+import RazorpayCheckout from 'react-native-razorpay';
 import PageTitle from '../components/PageTitle';
 import {useQuery, useQueryClient} from 'react-query';
 import Preloader from '../components/Preloader';
 import EmptyList from '../components/EmptyList';
 import Error from '../components/Error';
 import {AuthContext} from '../../context/authContext';
-import {BILL_FETCH, BILL_POST} from '../../constants/urls';
+import {BILL_FETCH, BILL_REQUEST, BILL_CONFIRM} from '../../constants/urls';
 
 const monthNames = [
   'January',
@@ -32,6 +41,100 @@ const fetchBills = async (key) => {
     },
   });
   return res.json();
+};
+
+const payBill = async (authData, id) => {
+  try {
+    const res = await fetch(BILL_REQUEST, {
+      method: 'POST',
+      body: JSON.stringify({id}),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: 'Token ' + authData.key,
+      },
+    });
+
+    if (res.status == 500) {
+      console.log('Some error occured at the server, please retry.');
+      return;
+    }
+
+    if (res.status == 200) {
+      const res_json = await res.json();
+      var order_id = res_json.order_id;
+    } else {
+      console.log('Some error occured, please retry.');
+      return;
+    }
+  } catch (error) {
+    console.log('Some error occured while requesting payment, please retry.');
+  }
+
+  var options = {
+    description: 'Payment for bill',
+    image: {logoImage}, //FIXME: Image not displaying, but http links work.
+    key: 'rzp_test_MtjornKoJ2KiHj', // Test Merchant ID
+    name: 'IIITG Mess',
+    order_id: order_id,
+    prefill: {
+      email: authData.email,
+      name: authData.name,
+    },
+    theme: {color: 'blue'},
+  };
+  RazorpayCheckout.open(options)
+    .then(async (data) => {
+      // handle success
+      //alert(`Success: ${data.razorpay_payment_id} | ${data.razorpay_signature}`);
+
+      let postData = {};
+      postData.payment_id = data.razorpay_payment_id;
+      postData.signature = data.razorpay_signature;
+
+      try {
+        const res = await fetch(BILL_CONFIRM, {
+          method: 'POST',
+          body: JSON.stringify(postData),
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: 'Token ' + authData.key,
+          },
+        });
+
+        if (res.status == 500) {
+          console.log('Some error occured, please retry.');
+          return;
+        }
+
+        if (res.status == 200) {
+          const res_json = await res.json();
+          console.log(res_json);
+          if (res_json.success == 1) {
+            alert('Success: Payment completed succesfully!'); //TODO: Do some UI magic
+            //TODO: Refresh coupons here
+          } else if (res_json.success == 0) {
+            alert('Failure: Payment did not completed succesfully!'); //TODO: Do some UI magic
+          } else {
+            alert('Failure: Payment did not completed succesfully!'); //TODO: Do some UI magic
+            console.log(
+              'Invalid success message. Contact the idiot. He messed up the server. Again.',
+            );
+          }
+        }
+      } catch (error) {
+        console.log('Some error occured, please retry.');
+      }
+    })
+    .catch((error) => {
+      // handle failure
+      if (error.code == 0) {
+        alert('Payment cancelled!');
+      } else {
+        alert(`Error: ${error.code} | ${error.description}`);
+      }
+    });
 };
 
 const items = [
@@ -84,7 +187,13 @@ const ListItem = ({billDetails, toggleModal}) => (
   </TouchableOpacity>
 );
 
-const ListItemModal = ({billDetails, toggleModal, isModalVisible}) => {
+const ListItemModal = ({
+  billDetails,
+  toggleModal,
+  isModalVisible,
+  auth,
+  refresh,
+}) => {
   const {
     buyer,
     is_paid: billStatus,
@@ -93,6 +202,12 @@ const ListItemModal = ({billDetails, toggleModal, isModalVisible}) => {
     bill_amount: billAmount,
     id: billId,
   } = billDetails;
+
+  const pay = async () => {
+    await payBill(auth, billId);
+    refresh();
+    toggleModal(false);
+  };
   return (
     <Modal
       onBackdropPress={() => toggleModal(false)}
@@ -131,6 +246,18 @@ const ListItemModal = ({billDetails, toggleModal, isModalVisible}) => {
             <Icon name="rupee-sign" size={20} />
             <Text style={styles.billDetailsText}>{billAmount + ''}</Text>
           </View>
+          {!billStatus && (
+            <Pressable
+              onPress={pay}
+              style={({pressed}) => [
+                !pressed && styles.shadow,
+                pressed && {opacity: 0.8},
+                styles.button,
+                styles.resolve,
+              ]}>
+              <Text style={styles.buttonText}>PAY NOW</Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </Modal>
@@ -161,7 +288,7 @@ export default function BillScreen({navigation}) {
   };
 
   const refresh = () => {
-    //setRefreshing(true);
+    queryClient.invalidateQueries('bills');
   };
 
   const renderItem = ({item}) => (
@@ -187,6 +314,8 @@ export default function BillScreen({navigation}) {
           toggleModal={toggleModal}
           isModalVisible={isModalVisible}
           billDetails={billDetails}
+          auth={authData}
+          refresh={refresh}
         />
         {status == 'loading' && <Preloader />}
         {status == 'error' && <Error />}
@@ -261,7 +390,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    maxHeight: 200,
+    maxHeight: 250,
     backgroundColor: 'white',
     padding: 15,
     borderRadius: 5,
@@ -294,6 +423,7 @@ const styles = StyleSheet.create({
   },
   modalBodyContainer: {
     paddingTop: 20,
+    flex: 1,
   },
   billDetails: {
     flexDirection: 'row',
@@ -304,5 +434,36 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
     color: '#333',
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  resolve: {
+    backgroundColor: '#368039',
+  },
+  button: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginHorizontal: 5,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginTop: 10,
+    justifyContent: 'center',
+    // position: 'absolute',
+    // bottom: 2,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
 });

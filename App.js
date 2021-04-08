@@ -4,6 +4,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import {enableScreens} from 'react-native-screens';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {StatusBar, LogBox} from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
 import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // todo: move data to a secure storage
@@ -47,6 +48,7 @@ export default function App() {
     (async function () {
       const authData = await AsyncStorage.getItem('auth-data');
       setLoading(false);
+      RNBootSplash.hide();
       if (authData) {
         setAuthData(JSON.parse(authData));
       }

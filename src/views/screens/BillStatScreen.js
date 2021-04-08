@@ -2,6 +2,8 @@ import React, {useContext, useState} from 'react';
 import {View, Text, StyleSheet, Dimensions, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useQuery, useQueryClient} from 'react-query';
+import * as Permissions from 'expo-permissions';
+import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import {PieChart} from 'react-native-chart-kit';
 import PageTitle from '../components/PageTitle';
@@ -20,15 +22,45 @@ const downloadFile = async (setLoading, key) => {
     const downloadResumable = FileSystem.createDownloadResumable(
       BILL_REPORT, // insert url here
       FileSystem.documentDirectory + 'report.csv',
-      { headers: { Authorization: 'Token ' + key} },
+      {headers: {Authorization: 'Token ' + key}},
     );
-    var response = await downloadResumable.downloadAsync();
-    console.log(response)
-    Alert.alert('Finished downloading');
+    const response = await downloadResumable.downloadAsync();
+
+    const res = await saveFileAsync(response.uri);
+    if (res) {
+      Alert.alert('File saved');
+    } else {
+      Alert.alert('Could not save file');
+    }
   } catch (e) {
     console.error(e);
   }
   setLoading(false);
+};
+
+const saveFileAsync = async (file_uri) => {
+  try {
+    const {status, permissions} = await Permissions.askAsync(
+      Permissions.MEDIA_LIBRARY,
+    );
+    if (
+      status === 'granted' &&
+      permissions.mediaLibrary.accessPrivileges !== 'limited'
+    ) {
+      const asset = await MediaLibrary.createAssetAsync(file_uri);
+      const album = await MediaLibrary.getAlbumAsync('Documents');
+      if (album === null) {
+        await MediaLibrary.createAlbumAsync('Documents', asset, false);
+      } else {
+        await MediaLibrary.addAssetsToAlbumAsync([asset], 'Documents', false);
+      }
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.log('ERR: saveFileAsync', error);
+    return false;
+  }
 };
 
 const getData = (bills) => {

@@ -4,7 +4,7 @@ import {AuthContext} from '../../context/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useQuery, useQueryClient} from 'react-query';
-import {LOGOUT_URL} from '../../constants/urls';
+import {LOGOUT_URL, BILL_MODE_UPDATE} from '../../constants/urls';
 import {
   profileStudentImage,
   profileCatererImage,
@@ -19,8 +19,20 @@ export default function ProfileScreen({navigation}) {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const {setAuthData, authData} = useContext(AuthContext);
-  const {name, email, typeAccount, specialRole} = authData;
-  const [mode, setMode] = useState(0);
+  const {name, email, typeAccount, specialRole, billingMode} = authData;
+  const [mode, setMode] = useState(billingMode);
+
+  const setBillingMode = async (updatedMode) => {
+    setMode(updatedMode);
+    await fetch(BILL_MODE_UPDATE, {
+      method: 'PUT',
+      body: JSON.stringify({requestedBillingMode: updatedMode}),
+      headers: {
+        Authorization: 'Bearer ' + authData.key,
+        'Content-Type': 'application/json',
+      },
+    });
+  };
 
   const profileImage =
     typeAccount === categories[1] ? profileCatererImage : profileStudentImage;
@@ -86,16 +98,20 @@ export default function ProfileScreen({navigation}) {
             <Icon name="phone-alt" size={20} />
             <Text style={styles.contactText}>+91-999-999-1000</Text>
           </View>
+          <View style={styles.contact}>
+            <Icon name="utensils" size={20} />
+            <Text style={styles.contactText}>{billingMode}</Text>
+          </View>
         </View>
         {typeAccount != categories[1] && (
           <View style={styles.contactContainer}>
-            <Text style={styles.labelText}>Billing Mode</Text>
+            <Text style={styles.labelText}>Switch Billing Mode</Text>
             {typeAccount == categories[2] ? (
               <Text>Coupon System</Text>
             ) : (
               <ModeSwitch
-                firstText="Coupon"
-                secondText="Monthly"
+                firstText="COUPON"
+                secondText="MONTHLY"
                 currentActive={mode}
                 setActive={setMode}
               />

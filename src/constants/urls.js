@@ -27,3 +27,4 @@ export const BILL_REPORT = API_URL + '/bill/report/';
 export const BILL_GENERATE = API_URL + '/bill/generate/';
 export const BILL_REQUEST = API_URL + '/bill/pay/request/';
 export const BILL_CONFIRM = API_URL + '/bill/pay/confirm/';
+export const BILL_MODE_UPDATE = BASE_URL + '/user/update/mode/';

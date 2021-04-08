@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Pressable, Image} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {avatarImage} from '../../constants/images';
+import {profileStudentImage} from '../../constants/images';
 
 export default function CardDetailsModal({
   details,
@@ -37,7 +37,7 @@ export default function CardDetailsModal({
         <View style={styles.topTextContainer}>
           <View style={styles.user}>
             <View style={styles.imgBackground}>
-              <Image source={avatarImage} style={styles.img} />
+              <Image source={profileStudentImage} style={styles.img} />
             </View>
             <View>
               <Text style={styles.subText}>{name}</Text>

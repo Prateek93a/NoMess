@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Pressable, Image} from 'react-native';
-import {avatarImage} from '../../constants/images';
+import {profileStudentImage} from '../../constants/images';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function Card({
@@ -25,7 +25,7 @@ export default function Card({
         <View style={styles.topTextContainer}>
           <View style={styles.user}>
             <View style={styles.imgBackground}>
-              <Image source={avatarImage} style={styles.img} />
+              <Image source={profileStudentImage} style={styles.img} />
             </View>
             <Text style={styles.subText}>{name}</Text>
           </View>

@@ -5,11 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useQuery, useQueryClient} from 'react-query';
 import {LOGOUT_URL, BILL_MODE_UPDATE} from '../../constants/urls';
-import {
-  profileStudentImage,
-  profileCatererImage,
-  avatarImage,
-} from '../../constants/images';
+import {profileStudentImage, profileCatererImage} from '../../constants/images';
 import categories from '../../constants/categories';
 import PageTitle from '../components/PageTitle';
 import MainButton from '../components/MainButton';

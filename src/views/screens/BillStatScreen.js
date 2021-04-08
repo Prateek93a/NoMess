@@ -6,7 +6,7 @@ import * as FileSystem from 'expo-file-system';
 import {PieChart} from 'react-native-chart-kit';
 import PageTitle from '../components/PageTitle';
 import {AuthContext} from '../../context/authContext';
-import {BILL_FETCH} from '../../constants/urls';
+import {BILL_FETCH, BILL_REPORT} from '../../constants/urls';
 import Preloader from '../components/Preloader';
 import EmptyList from '../components/EmptyList';
 import Error from '../components/Error';
@@ -14,16 +14,16 @@ import MainButton from '../components/MainButton';
 
 const screenWidth = Dimensions.get('window').width;
 
-const downloadResumable = FileSystem.createDownloadResumable(
-  'url', // insert url here
-  FileSystem.documentDirectory + 'student.xls',
-  {},
-);
-
-const downloadFile = async (setLoading) => {
+const downloadFile = async (setLoading, key) => {
   setLoading(true);
   try {
-    await downloadResumable.downloadAsync();
+    const downloadResumable = FileSystem.createDownloadResumable(
+      BILL_REPORT, // insert url here
+      FileSystem.documentDirectory + 'report.csv',
+      { headers: { Authorization: 'Token ' + key} },
+    );
+    var response = await downloadResumable.downloadAsync();
+    console.log(response)
     Alert.alert('Finished downloading');
   } catch (e) {
     console.error(e);
@@ -129,7 +129,7 @@ export default function BillStatScreen({navigation}) {
               />
               <View style={styles.buttonContainer}>
                 <MainButton
-                  onPress={() => downloadFile(setLoading)}
+                  onPress={() => downloadFile(setLoading, authData.key)}
                   title="Generate Student Report"
                   loading={loading}
                 />

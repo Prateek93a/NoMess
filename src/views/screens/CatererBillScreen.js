@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {AuthContext} from '../../context/authContext';
 import PageTitle from '../components/PageTitle';
+import {BILL_GENERATE} from '../../constants/urls'
 
 const monthNames = [
   'January',
@@ -19,15 +20,20 @@ const monthNames = [
   'December',
 ];
 
+
 const generateBill = async (key) => {
-  const res = await fetch('url', {
+  const res = await fetch(BILL_GENERATE, {
+    method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
       Authorization: 'Token ' + key,
     },
   });
 
   const res_json = await res.json();
-  if (res_json.months.length) {
+  console.log(res_json);
+  if (res_json.success) {
     Alert.alert(
       '',
       `Bill generated for ${res_json.months

@@ -14,7 +14,10 @@ export default function CardDetailsModal({
   isComplaint = false,
 }) {
   let active = false;
-  const {user_name: name, applied_date: date, id, title, body} = details;
+  let {user_name: name, applied_date: date, id, title, body} = details;
+
+  title = title || 'Leave Application';
+
   if (isComplaint) {
     active = !details.resolved;
   } else {

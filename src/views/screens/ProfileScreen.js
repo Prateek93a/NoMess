@@ -94,10 +94,12 @@ export default function ProfileScreen({navigation}) {
             <Icon name="phone-alt" size={20} />
             <Text style={styles.contactText}>+91-999-999-1000</Text>
           </View>
-          <View style={styles.contact}>
-            <Icon name="utensils" size={20} />
-            <Text style={styles.contactText}>{billingMode}</Text>
-          </View>
+          {typeAccount != categories[1] && (
+            <View style={styles.contact}>
+              <Icon name="utensils" size={20} />
+              <Text style={styles.contactText}>{billingMode}</Text>
+            </View>
+          )}
         </View>
         {typeAccount != categories[1] && (
           <View style={styles.contactContainer}>

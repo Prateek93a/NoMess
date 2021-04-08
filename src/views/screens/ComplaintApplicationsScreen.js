@@ -118,22 +118,23 @@ export default function ComplaintApplicationsScreen({navigation}) {
         />
         {status == 'loading' && <Preloader />}
         {status == 'error' && <Error />}
-        {status == 'success' && complaints.length ? (
-          complaints.map((complaint) => (
-            <Card
-              name={complaint.user_name}
-              isComplaint={true}
-              key={complaint.id}
-              title={complaint.title}
-              date={complaint.applied_date}
-              id={complaint.id}
-              active={!complaint.resolved}
-              onPress={() => toggleModal(true, complaint)}
-            />
-          ))
-        ) : (
-          <EmptyList text="No complaints filed" />
-        )}
+        {status == 'success' &&
+          (complaints.length ? (
+            complaints.map((complaint) => (
+              <Card
+                name={complaint.user_name}
+                isComplaint={true}
+                key={complaint.id}
+                title={complaint.title}
+                date={complaint.applied_date}
+                id={complaint.id}
+                active={!complaint.resolved}
+                onPress={() => toggleModal(true, complaint)}
+              />
+            ))
+          ) : (
+            <EmptyList text="No complaints filed" />
+          ))}
       </View>
     </ScrollView>
   );

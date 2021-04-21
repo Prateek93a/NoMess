@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image, Alert} from 'react-native';
 import {AuthContext} from '../../context/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -11,12 +11,14 @@ import PageTitle from '../components/PageTitle';
 import MainButton from '../components/MainButton';
 import ModeSwitch from '../components/ModeSwitch';
 
+const modes = ['COUPON', 'MONTHLY'];
+
 export default function ProfileScreen({navigation}) {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const {setAuthData, authData} = useContext(AuthContext);
   const {name, email, typeAccount, specialRole, billingMode} = authData;
-  const [mode, setMode] = useState(billingMode);
+  const [mode, setMode] = useState(billingMode || 1);
 
   const setBillingMode = async (updatedMode) => {
     setMode(updatedMode);
@@ -28,6 +30,7 @@ export default function ProfileScreen({navigation}) {
         'Content-Type': 'application/json',
       },
     });
+    Alert.alert('', 'Changes will take place from next month');
   };
 
   const profileImage =
@@ -97,23 +100,23 @@ export default function ProfileScreen({navigation}) {
           {typeAccount != categories[1] && (
             <View style={styles.contact}>
               <Icon name="utensils" size={20} />
-              <Text style={styles.contactText}>{billingMode}</Text>
+              <Text style={styles.contactText}>
+                {typeAccount == categories[2]
+                  ? 'COUPON'
+                  : modes[billingMode || 1]}
+              </Text>
             </View>
           )}
         </View>
-        {typeAccount != categories[1] && (
+        {typeAccount == categories[0] && (
           <View style={styles.contactContainer}>
             <Text style={styles.labelText}>Switch Billing Mode</Text>
-            {typeAccount == categories[2] ? (
-              <Text>Coupon System</Text>
-            ) : (
-              <ModeSwitch
-                firstText="COUPON"
-                secondText="MONTHLY"
-                currentActive={mode}
-                setActive={setMode}
-              />
-            )}
+            <ModeSwitch
+              firstText="COUPON"
+              secondText="MONTHLY"
+              currentActive={mode}
+              setActive={setBillingMode}
+            />
           </View>
         )}
       </View>
@@ -216,6 +219,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: 'center',
-    paddingBottom: 15,
+    paddingBottom: 5,
   },
 });

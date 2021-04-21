@@ -42,12 +42,16 @@ const fetchLeaves = async (key) => {
 };
 
 const approveLeave = async (key, id) => {
-  await fetch(LEAVE_APPROVE + id, {
-    method: 'PUT',
+  const res = await fetch(LEAVE_APPROVE + id + '/', {
+    method: 'PATCH',
+    body: JSON.stringify({is_approved: true}),
     headers: {
       Authorization: 'Token ' + key,
+      'Content-Type': 'application/json',
     },
   });
+
+  console.log(res);
 };
 
 export default function LeaveApplicationsScreen({navigation}) {
@@ -79,6 +83,7 @@ export default function LeaveApplicationsScreen({navigation}) {
     try {
       await approveLeave(authData.key, id); // use the useMutation hook
       queryClient.invalidateQueries('leaves');
+      toggleModal(false);
     } catch (e) {
       console.log(e);
     }

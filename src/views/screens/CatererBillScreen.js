@@ -1,9 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {AuthContext} from '../../context/authContext';
 import PageTitle from '../components/PageTitle';
-import {BILL_GENERATE} from '../../constants/urls'
+import {BILL_GENERATE} from '../../constants/urls';
+import MainButton from '../components/MainButton';
 
 const monthNames = [
   'January',
@@ -20,13 +21,12 @@ const monthNames = [
   'December',
 ];
 
-
 const generateBill = async (key) => {
   const res = await fetch(BILL_GENERATE, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      Accept: 'application/json',
       Authorization: 'Token ' + key,
     },
   });
@@ -61,13 +61,16 @@ const ListItem = ({title, onPress}) => (
 
 export default function CatererBillScreen({navigation}) {
   const {authData} = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const handlePress = async () => {
     try {
+      setLoading(true);
       await generateBill(authData.key);
     } catch (e) {
       console.log(e);
       Alert.alert('', 'Some error occured. \n Please try again later.');
     }
+    setLoading(false);
   };
   return (
     <View style={styles.container}>
@@ -84,7 +87,6 @@ export default function CatererBillScreen({navigation}) {
         <PageTitle text="Transactions & Stats" showRefresh={false} />
       </View>
       <View style={styles.body}>
-        <ListItem title="Generate Bill" onPress={handlePress} />
         <ListItem
           title="Bill Transaction Stats"
           onPress={() => navigation.navigate('bill-stats')}
@@ -93,6 +95,13 @@ export default function CatererBillScreen({navigation}) {
           title="Coupon Transaction Stats"
           onPress={() => navigation.navigate('coupon-stats')}
         />
+        <View style={{alignItems: 'center', paddingTop: 30}}>
+          <MainButton
+            onPress={handlePress}
+            title="GENERATE BILL"
+            loading={loading}
+          />
+        </View>
       </View>
     </View>
   );

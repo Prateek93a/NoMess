@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {AuthContext} from '../../context/authContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import PageTitle from '../components/PageTitle';
+import categories from '../../constants/categories';
 
 const ListItem = ({title, onPress}) => (
   <TouchableOpacity onPress={onPress}>
@@ -18,6 +20,9 @@ const ListItem = ({title, onPress}) => (
 );
 
 export default function BillScreen({navigation}) {
+  const {authData} = useContext(AuthContext);
+  const {typeAccount} = authData;
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -37,10 +42,12 @@ export default function BillScreen({navigation}) {
           title="Coupon History"
           onPress={() => navigation.navigate('coupon-history')}
         />
-        <ListItem
-          title="Bill History"
-          onPress={() => navigation.navigate('bill-history')}
-        />
+        {typeAccount !== categories[2] && (
+          <ListItem
+            title="Bill History"
+            onPress={() => navigation.navigate('bill-history')}
+          />
+        )}
       </View>
     </View>
   );

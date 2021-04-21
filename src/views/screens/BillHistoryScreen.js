@@ -296,7 +296,7 @@ export default function BillScreen({navigation}) {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {flexGrow: 1}]}>
       <View style={styles.header}>
         <View style={styles.headerButtons}>
           <Icon.Button
@@ -347,7 +347,11 @@ export default function BillScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 5,
     backgroundColor: '#fff',
+  },
+  header: {
+    flex: 1,
   },
   headerButtons: {
     flexDirection: 'row',
@@ -360,7 +364,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   body: {
-    paddingTop: 40,
+    // paddingTop: 40,
+    flex: 3,
   },
   listHeaderContainer: {
     flexDirection: 'row',

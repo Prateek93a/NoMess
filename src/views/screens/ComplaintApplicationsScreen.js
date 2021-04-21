@@ -42,10 +42,12 @@ const fetchComplaints = async (key) => {
 };
 
 const resolveComplaint = async (key, id) => {
-  await fetch(COMPLAINT_RESOLVE + id, {
-    method: 'PUT',
+  await fetch(COMPLAINT_RESOLVE + id + '/', {
+    method: 'PATCH',
+    body: JSON.stringify({resolved: true}),
     headers: {
       Authorization: 'Token ' + key,
+      'Content-Type': 'application/json',
     },
   });
 };
@@ -84,6 +86,7 @@ export default function ComplaintApplicationsScreen({navigation}) {
     try {
       await resolveComplaint(authData.key, id); // use the useMutation hook
       queryClient.invalidateQueries('complaints');
+      toggleModal(false);
     } catch (e) {
       console.log(e);
     }

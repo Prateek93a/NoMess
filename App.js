@@ -36,14 +36,17 @@ LogBox.ignoreLogs(['Setting a timer for a long period of time']);
 enableScreens();
 const queryClient = new QueryClient();
 
+// Create two stacks navigators, one for authicated users, other for non authenticated users
 const OnboardingStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 
 export default function App() {
+  // Define states for the screen
   const [loading, setLoading] = useState(false);
   const {authData, setAuthData} = useContext(AuthContext);
 
   useEffect(() => {
+    // Check if the user is already logged in, using auth data from local storage
     setLoading(true);
     (async function () {
       const authData = await AsyncStorage.getItem('auth-data');
@@ -56,10 +59,12 @@ export default function App() {
   }, []);
 
   if (loading) {
+    // Diplay a splash screen while state is loading
     return <SplashScreen />;
   }
 
   if (!authData) {
+    // Non authenticated users will see the onboarding flow
     return (
       <NavigationContainer>
         <StatusBar backgroundColor="#FCF6D7" barStyle="dark-content" />
@@ -80,6 +85,7 @@ export default function App() {
   }
 
   return (
+    // Authenticated users will see the authenticated screen flow
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
         <StatusBar backgroundColor="white" barStyle="dark-content" />

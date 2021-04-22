@@ -1,7 +1,7 @@
 const BASE_URL =
-  'http://ec2-3-23-96-26.us-east-2.compute.amazonaws.com:8000/api/v1/auth';
+  'https://mess-management-server.herokuapp.com/api/v1/auth';
 const API_URL =
-  'http://ec2-3-23-96-26.us-east-2.compute.amazonaws.com:8000/api/v1';
+  'https://mess-management-server.herokuapp.com/api/v1';
 
 export const LOGIN_URL = BASE_URL + '/login/';
 export const LOGOUT_URL = BASE_URL + '/logout/';

@@ -84,7 +84,18 @@ export default function RegisterScreen({ route, navigation }) {
                 await AsyncStorage.setItem('auth-data', JSON.stringify(data));
                 setLoading(false);
                 setAuthData(data);
-            }else{
+            } else if(res.status == 400) {
+                const res_json = await res.json();
+                if(res_json['password1']){
+                    setPasswordError('Password too weak! Fill a stronger password.');
+                    setLoading(false);
+                    return;
+                } else {
+                    setAuthError('Some internal error occured, please retry.');
+                    setLoading(false);
+                    return;
+                }
+            } else {
                 setAuthError('Some internal error occured, please retry.');
                 setLoading(false);
                 return;
